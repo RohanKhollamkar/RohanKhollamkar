@@ -81,14 +81,14 @@
     <text x="46" y="294" class="serif nm it" fill="url(#nameg)">Khollamkar<tspan fill="#f0a6c4">.</tspan></text>
     <rect x="48" y="310" width="520" height="2" fill="url(#fade)"/>
 
-    <text x="48" y="346" class="mono hd">AI PRODUCT LEADER · PRODUCT × MACHINE LEARNING</text>
-    <text x="48" y="380" class="serif tg">Turning machine learning into products people trust.</text>
+    <text x="48" y="346" class="mono hd">AI PRODUCT LEADER · PRODUCT × ANALYTICS x AI</text>
+    <text x="48" y="380" class="serif tg">Turning AI-driven systems into products people trust.</text>
 
     <circle cx="790" cy="205" r="105" class="rg"/>
     <circle cx="790" cy="205" r="140" class="rg d"/>
     <circle cx="790" cy="205" r="75" class="ringp"/>
     <circle cx="849.2" cy="78.1" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:0s"/>
-    <text x="859.2" y="81.6" text-anchor="start" class="mono orb">LLM</text><circle cx="929.5" cy="192.8" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:0.4s"/>
+    <text x="859.2" y="81.6" text-anchor="start" class="mono orb">LLMs</text><circle cx="929.5" cy="192.8" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:0.4s"/>
     <text x="939.5" y="196.3" text-anchor="start" class="mono orb">MCP</text><circle cx="897.2" cy="295.0" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:0.8s"/>
     <text x="907.2" y="298.5" text-anchor="start" class="mono orb">AGENTS</text><circle cx="682.8" cy="295.0" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:1.2000000000000002s"/>
     <text x="672.8" y="298.5" text-anchor="end" class="mono orb">RAG</text><circle cx="668.8" cy="135.0" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:1.6s"/>

@@ -56,7 +56,7 @@
       <text x="72" y="208" class="mono tcmd"><tspan fill="#f0a6c4">$</tspan> Industries</text>
       <text x="72" y="229" class="mono tout">Fintech · Insurtech · E-commerce · MarTech</text></g><g class="type" style="animation-delay:4.5s">
       <text x="72" y="260" class="mono tcmd"><tspan fill="#f0a6c4">$</tspan> Focus</text>
-      <text x="72" y="281" class="mono tout">AI strategy · Agent systems · Quality &amp; Safety evals<tspan class="cursor" fill="#f0a6c4"> ▍</tspan></text></g><g><rect x="664" y="36" width="288" height="80" rx="12" class="tile"/>
+      <text x="72" y="281" class="mono tout">AI strategy · Multi-agent systems · Quality &amp; Safety evals<tspan class="cursor" fill="#f0a6c4"> ▍</tspan></text></g><g><rect x="664" y="36" width="288" height="80" rx="12" class="tile"/>
       <rect x="664" y="48" width="3" height="56" rx="1.5" fill="#f0a6c4"/>
       <text x="686" y="60" class="mono tl">EXPERIENCE</text>
       <text x="686" y="90" class="serif tv">6+ years</text>
@@ -68,6 +68,6 @@
       <rect x="664" y="232" width="3" height="56" rx="1.5" fill="#f0a6c4"/>
       <text x="686" y="244" class="mono tl">AI DISCIPLINES</text>
       <text x="686" y="274" class="serif tv">6</text>
-      <text x="686" y="290" class="mono ts">Architecture to safety evaluation</text></g>
+      <text x="686" y="290" class="mono ts">Architecture to Safety evaluation</text></g>
   </g>
 </svg>
