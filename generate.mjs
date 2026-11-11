@@ -116,33 +116,27 @@ function render(repos, t) {
     .title { font-size: 17px; font-weight: 600; fill: ${t.a1}; }
     .desc { font-size: 13px; fill: ${t.text}; }
     .meta { font-size: 12px; fill: ${t.muted}; }
-    .card { opacity: 0; animation: rise 0.6s ease-out forwards; }
+    .card { animation: rise .8s ease-out both; }
     .run { animation: run 4s linear infinite; }
     .pulse { animation: pulse 2s ease-in-out infinite; }
-    .fade { opacity: 0; animation: fade 0.6s ease-out forwards; }
-    @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fade { to { opacity: 1; } }
+    .cursor { animation: blink 1s steps(1) infinite; }
+    @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes run { to { stroke-dashoffset: -100; } }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
-    @media (prefers-reduced-motion: reduce) {
-      .card, .fade { animation: none; opacity: 1; }
-      .run, .pulse { animation: none; }
-    }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .card,.run,.pulse,.cursor { animation: none; opacity: 1; } }
   </style>
   <rect width="${W}" height="${H}" rx="14" fill="${t.bg}"/>
-  <g class="fade">
-    <text x="${pad}" y="34" class="head">Latest builds</text>
-    <text x="${pad}" y="53" class="sub">My ${repos.length === 1 ? 'most recently pushed repository' : `${repos.length} most recently pushed repositories`} · refreshed automatically</text>
-  </g>${repos.length ? cards : `
-  <text x="${W / 2}" y="${headerH + cardH / 2}" class="sub" text-anchor="middle">No public repositories to show yet.</text>`}
+  <text x="${pad + 4}" y="36" class="head">Latest builds<tspan class="cursor" fill="${t.a2}"> ▍</tspan></text>
+  <text x="${W - pad - 4}" y="36" class="sub" text-anchor="end">auto-updated from GitHub</text>
+  ${cards}
 </svg>
 `;
 }
 
 const repos = await fetchRepos();
-if (!repos.length) console.warn(`No eligible repos found for ${USER} (public, non-fork, non-archived).`);
+if (!repos.length) throw new Error(`No eligible public repos found for ${USER}`);
 for (const [name, theme] of Object.entries(THEMES)) {
-  const file = `showcase-${name}.svg`;
-  writeFileSync(file, render(repos, theme));
-  console.log(`Wrote ${file}: ${repos.map(r => r.name).join(', ') || '(empty)'}`);
+  writeFileSync(`showcase-${name}.svg`, render(repos, theme));
 }
+console.log(`Wrote showcase-dark.svg and showcase-light.svg for: ${repos.map(r => r.name).join(', ')}`);
