@@ -31,7 +31,7 @@
       <rect class="run" width="420" height="172" rx="12" fill="none" stroke="url(#g)" stroke-width="2" pathLength="100" stroke-dasharray="14 86" style="animation-delay:0.25s"/>
       <circle class="pulse" cx="28" cy="34" r="4" fill="#58a6ff"/>
       <text x="44" y="39" class="title">directoragent</text>
-      <text x="24" y="78" class="desc">An AI agent that takes a single photo and a scene</text><text x="24" y="98" class="desc">description to produces a production-quality</text><text x="24" y="118" class="desc">storyboard — a sequenced set of cinematic…</text>
+      <text x="24" y="78" class="desc">An AI agent that takes a single photo and a scene</text><text x="24" y="98" class="desc">description to produce a production-quality</text><text x="24" y="118" class="desc">storyboard — a sequenced set of cinematic…</text>
       <circle cx="29" cy="146" r="5" fill="#3572A5"/><text x="40" y="150" class="meta">Python</text><text x="94" y="150" class="meta">★ 1</text><text x="140" y="150" class="meta">⑂ 0</text><text x="396" y="150" class="meta" text-anchor="end">Updated Oct 2026</text>
     </g>
   </g>
