@@ -1,0 +1,24 @@
+{
+  "_help": "Optional. Repos not listed here get cards built automatically from GitHub data. To customise one, add an entry under 'repos' keyed by the exact repo name, using any of the fields shown in _example. 'visual' is one of: network, documents, flow, pipeline. Delete _example when you add real entries.",
+  "count": 2,
+  "exclude": [],
+  "repos": {
+    "_example": {
+      "title": "Display Title",
+      "eyebrow": "AI · AGENTS · 2026",
+      "tagline": "One sentence on what it does and why it matters.",
+      "built": "what you built, in a short mono line",
+      "stats": [
+        { "value": "92%", "label": "your real metric" },
+        { "value": "3×", "label": "another real metric" },
+        { "value": "40%", "label": "a third one" }
+      ],
+      "tags": ["Python", "LLM", "REST API"],
+      "visual": "network",
+      "label": "TRUST",
+      "caption": "agents · tools · policy",
+      "chip": ["Q · short question?", "A · short answer"],
+      "states": ["running", "success", "failed"]
+    }
+  }
+}
