@@ -77,7 +77,7 @@
     <line x1="48" y1="122" x2="82" y2="122" stroke="#d68aae" stroke-opacity=".6"/>
     <text x="94" y="126" class="mono eyebrow">AI · PRODUCT · STRATEGY</text>
 
-    <text x="46" y="204" class="serif nm">Rohan</text>
+    <text x="46" y="204" class="serif nm it">Rohan</text>
     <text x="46" y="294" class="serif nm it" fill="url(#nameg)">Khollamkar</text>
     <rect x="48" y="310" width="520" height="2" fill="url(#fade)"/>
 
