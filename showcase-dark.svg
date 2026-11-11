@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="264" viewBox="0 0 900 264" role="img" aria-label="Latest repositories">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#58a6ff"/><stop offset="1" stop-color="#bc8cff"/>
+    </linearGradient>
+  </defs>
+  <style>
+    text { font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
+    .head { font-size: 22px; font-weight: 700; fill: #e6edf3; }
+    .sub { font-size: 13px; fill: #8b949e; }
+    .title { font-size: 17px; font-weight: 600; fill: #58a6ff; }
+    .desc { font-size: 13px; fill: #e6edf3; }
+    .meta { font-size: 12px; fill: #8b949e; }
+    .card { opacity: 0; animation: rise 0.6s ease-out forwards; }
+    .run { animation: run 4s linear infinite; }
+    .pulse { animation: pulse 2s ease-in-out infinite; }
+    .fade { opacity: 0; animation: fade 0.6s ease-out forwards; }
+    @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fade { to { opacity: 1; } }
+    @keyframes run { to { stroke-dashoffset: -100; } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+    @media (prefers-reduced-motion: reduce) {
+      .card, .fade { animation: none; opacity: 1; }
+      .run, .pulse { animation: none; }
+    }
+  </style>
+  <rect width="900" height="264" rx="14" fill="#0d1117"/>
+  <g class="fade">
+    <text x="20" y="34" class="head">Latest builds</text>
+    <text x="20" y="53" class="sub">My 2 most recently pushed repositories · refreshed automatically</text>
+  </g>
+  <g transform="translate(20 64)">
+    <g class="card" style="animation-delay:0.25s">
+      <rect width="420" height="172" rx="12" fill="#161b22" stroke="#30363d"/>
+      <rect class="run" width="420" height="172" rx="12" fill="none" stroke="url(#g)" stroke-width="2" pathLength="100" stroke-dasharray="14 86" style="animation-delay:0.25s"/>
+      <circle class="pulse" cx="28" cy="34" r="4" fill="#58a6ff"/>
+      <text x="44" y="39" class="title">directoragent</text>
+      <text x="24" y="78" class="desc">An AI agent that takes a single photo and a scene</text><text x="24" y="98" class="desc">description to produces a production-quality</text><text x="24" y="118" class="desc">storyboard — a sequenced set of cinematic…</text>
+      <circle cx="29" cy="146" r="5" fill="#3572A5"/><text x="40" y="150" class="meta">Python</text><text x="94" y="150" class="meta">★ 1</text><text x="140" y="150" class="meta">⑂ 0</text><text x="396" y="150" class="meta" text-anchor="end">Updated Oct 2026</text>
+    </g>
+  </g>
+  <g transform="translate(460 64)">
+    <g class="card" style="animation-delay:0.50s">
+      <rect width="420" height="172" rx="12" fill="#161b22" stroke="#30363d"/>
+      <rect class="run" width="420" height="172" rx="12" fill="none" stroke="url(#g)" stroke-width="2" pathLength="100" stroke-dasharray="14 86" style="animation-delay:0.50s"/>
+      <circle class="pulse" cx="28" cy="34" r="4" fill="#58a6ff"/>
+      <text x="44" y="39" class="title">IAM-Agent</text>
+      <text x="24" y="78" class="desc">Nobody knows who an AI agent is, what it's allowed</text><text x="24" y="98" class="desc">to do, or who's responsible when it does something</text><text x="24" y="118" class="desc">wrong. This is arguably the single most…</text>
+      <circle cx="29" cy="146" r="5" fill="#3572A5"/><text x="40" y="150" class="meta">Python</text><text x="94" y="150" class="meta">★ 0</text><text x="140" y="150" class="meta">⑂ 0</text><text x="396" y="150" class="meta" text-anchor="end">Updated Jul 2026</text>
+    </g>
+  </g>
+</svg>
