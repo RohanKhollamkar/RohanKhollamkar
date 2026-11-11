@@ -105,11 +105,12 @@ const VISUAL_HINTS = {
   pipeline: ['pipeline', 'etl', 'payment', 'state machine', 'deploy', 'ci', 'queue', 'ingest', 'cleaning', 'analysis', 'eda'],
 };
 const VISUALS = Object.keys(VISUAL_HINTS);
+const PICK_ORDER = ['documents', 'flow', 'pipeline', 'network']; // on a tie the more specific visual wins; network is the generic fallback
 
 function pickVisual(r) {
   const hay = ` ${r.name} ${r.description || ''} ${(r.topics || []).join(' ')} `.toLowerCase().replace(/[-_]/g, ' ');
   let best = null, bestScore = 0;
-  for (const v of VISUALS) {
+  for (const v of PICK_ORDER) {
     const score = VISUAL_HINTS[v].filter(k => (k.length <= 3 ? hay.includes(` ${k} `) : hay.includes(k))).length;
     if (score > bestScore) { best = v; bestScore = score; }
   }
@@ -148,7 +149,7 @@ function model(r, langs, i) {
     stats: (o.stats?.length ? o.stats : autoStats).slice(0, 3),
     tags,
     visual,
-    label: o.label || (topics[0] || visual).toUpperCase(),
+    label: o.label || (topics.find(t => t.length <= 14) || visual).toUpperCase(),
     caption: o.caption || tags.slice(0, 3).join(' · ').toLowerCase(),
     chip: o.chip?.length ? o.chip : ['Q · what does it say?', 'A · answer, with source'],
     states: o.states?.length ? o.states : ['running', 'success', 'failed'],
