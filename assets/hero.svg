@@ -78,7 +78,7 @@
     <text x="94" y="126" class="mono eyebrow">AI · PRODUCT · STRATEGY</text>
 
     <text x="46" y="204" class="serif nm">Rohan</text>
-    <text x="46" y="294" class="serif nm it" fill="url(#nameg)">Khollamkar<tspan fill="#f0a6c4">.</tspan></text>
+    <text x="46" y="294" class="serif nm it" fill="url(#nameg)">Khollamkar</text>
     <rect x="48" y="310" width="520" height="2" fill="url(#fade)"/>
 
     <text x="48" y="346" class="mono hd">AI PRODUCT LEADER · PRODUCT × ANALYTICS x AI</text>
