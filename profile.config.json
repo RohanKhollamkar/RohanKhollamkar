@@ -14,15 +14,15 @@
   "portrait": "character",
   "photo": "assets/photo.jpg",
   "terminal": [
-    { "cmd": "whoami", "out": "Rohan Khollamkar · AI Product Leader" },
-    { "cmd": "experience", "out": "6+ years · product management × machine learning" },
-    { "cmd": "industries", "out": "Fintech · Insurtech · E-commerce · MarTech" },
-    { "cmd": "focus", "out": "AI strategy · agent systems · quality & safety evals" }
+    { "cmd": "Who am I ?", "out": "Rohan Khollamkar · AI Product Leader" },
+    { "cmd": "Experience", "out": "6+ years · Product management × Analytics x Machine learning" },
+    { "cmd": "Industries", "out": "Fintech · Insurtech · E-commerce · MarTech" },
+    { "cmd": "Focus", "out": "AI strategy · Agent systems · Quality & Safety evals" }
   ],
   "stats": [
-    { "label": "EXPERIENCE", "value": "6+ years", "sub": "product management × machine learning" },
+    { "label": "EXPERIENCE", "value": "6+ years", "sub": "Product management × AI & Machine learning" },
     { "label": "INDUSTRIES", "value": "4", "sub": "Fintech · Insurtech · E-commerce · MarTech" },
-    { "label": "AI DISCIPLINES", "value": "6", "sub": "architecture to safety evaluation" }
+    { "label": "AI DISCIPLINES", "value": "6", "sub": "Architecture to safety evaluation" }
   ],
   "leadership": ["Product & AI Strategy", "Revenue & Team Leadership"],
   "craft": [
