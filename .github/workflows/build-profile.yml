@@ -1,0 +1,46 @@
+name: Build profile assets
+
+on:
+  workflow_dispatch:          # run manually from the Actions tab
+  push:
+    branches: [main]
+    paths:
+      - profile.config.json
+      - build-profile.mjs
+      - assets/photo.*
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-profile
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build assets and README
+        run: node build-profile.mjs
+
+      - name: Check every SVG is valid XML
+        run: |
+          for f in assets/*.svg; do
+            python3 -c "import sys,xml.dom.minidom as m; m.parse(sys.argv[1])" "$f" || { echo "::error file=$f::not valid XML"; exit 1; }
+          done
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A assets README.md
+          git diff --staged --quiet && exit 0
+          git commit -m "chore: rebuild profile assets"
+          git pull --rebase origin main
+          git push
