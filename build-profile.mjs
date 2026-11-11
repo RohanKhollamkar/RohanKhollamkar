@@ -102,8 +102,17 @@ function hero() {
   if (P.photo && existsSync(P.photo)) {
     const mime = { '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp' }[extname(P.photo).toLowerCase()] || 'image/jpeg';
     const b64 = readFileSync(P.photo).toString('base64');
-    photoDefs = `<clipPath id="arch"><path d="M715 305 V180 A75 75 0 0 1 865 180 V305 Z"/></clipPath>`;
-    inner = `<image href="data:${mime};base64,${b64}" x="715" y="105" width="150" height="200" preserveAspectRatio="xMidYMid slice" clip-path="url(#arch)"/>`;
+    photoDefs = `<clipPath id="arch"><path d="M715 305 V180 A75 75 0 0 1 865 180 V305 Z"/></clipPath>
+    <linearGradient id="archbase" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbdce8"/><stop offset="0.55" stop-color="#e3a9c4"/><stop offset="1" stop-color="#8a3358"/></linearGradient>
+    <linearGradient id="archfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0.62" stop-color="#14070d" stop-opacity="0"/><stop offset="1" stop-color="#14070d" stop-opacity="0.9"/></linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="${ROSE}" stop-opacity="0.38"/><stop offset="0.6" stop-color="#b8476f" stop-opacity="0.16"/><stop offset="1" stop-color="#b8476f" stop-opacity="0"/></radialGradient>`;
+    inner = `<g clip-path="url(#arch)">
+      <rect x="715" y="105" width="150" height="200" fill="url(#archbase)"/>
+      <image href="data:${mime};base64,${b64}" x="715" y="105" width="150" height="200" preserveAspectRatio="xMidYMid slice" style="mix-blend-mode:multiply;filter:brightness(1.28) contrast(1.04) saturate(1.0)"/>
+      <rect x="715" y="105" width="150" height="200" fill="url(#archfade)"/>
+    </g>
+    <path d="M715 305 V180 A75 75 0 0 1 865 180 V305 Z" fill="none" stroke="#f0c9d8" stroke-opacity=".55" stroke-width="1.2"/>
+    <path d="M879 150 V318 H702 M879 150" fill="none" stroke="#d9bd9c" stroke-opacity=".6" stroke-width="1"/>`;
   }
 
   const body = `
@@ -126,6 +135,7 @@ function hero() {
     <circle cx="${cx}" cy="${cy}" r="75" class="ringp"/>
     ${orbit}
     ${orbitDot(105, 14, 0)}${orbitDot(140, 22, -6)}
+    ${P.photo && existsSync(P.photo) ? `<circle cx="${cx}" cy="${cy}" r="150" fill="url(#halo)"/>` : ''}
     <path d="M715 305 V180 A75 75 0 0 1 865 180 V305 Z" fill="url(#archg)" stroke="${ROSE}" stroke-opacity=".55"/>
     ${inner}
 
