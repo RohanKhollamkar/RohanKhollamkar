@@ -6,18 +6,18 @@
   "title": "AI Product Leader",
   "prompt": { "path": "~/rohan", "cmd": "ship --ai-products" },
   "eyebrow": "AI · PRODUCT · STRATEGY",
-  "headline": "AI PRODUCT LEADER · PRODUCT × MACHINE LEARNING",
-  "tagline": "Turning machine learning into products people trust.",
+  "headline": "AI PRODUCT LEADER · PRODUCT × ANALYTICS x AI",
+  "tagline": "Turning AI-driven systems into products people trust.",
   "footerLeft": "FINTECH · INSURTECH · E-COMMERCE · MARTECH",
   "footerRight": "PRODUCT & AI STRATEGY · REVENUE & TEAM LEADERSHIP",
-  "orbit": ["LLM", "MCP", "AGENTS", "RAG", "EVALS"],
+  "orbit": ["LLMs", "MCP", "AGENTS", "RAG", "EVALS", "HARNESS ENGINEERING"],
   "portrait": "character",
   "photo": "assets/photo.jpg",
   "terminal": [
     { "cmd": "Who am I ?", "out": "Rohan Khollamkar · AI Product Leader" },
     { "cmd": "Experience", "out": "6+ years · Product management × Analytics x Machine learning" },
     { "cmd": "Industries", "out": "Fintech · Insurtech · E-commerce · MarTech" },
-    { "cmd": "Focus", "out": "AI strategy · Agent systems · Quality & Safety evals" }
+    { "cmd": "Focus", "out": "AI strategy · Multi-agent systems · Quality & Safety evals" }
   ],
   "stats": [
     { "label": "EXPERIENCE", "value": "6+ years", "sub": "Product management × AI & Machine learning" },
