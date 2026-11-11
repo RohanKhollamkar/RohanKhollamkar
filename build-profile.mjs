@@ -79,6 +79,94 @@ function shell(w, h, label, body, { cx = 0.82, cy = 0.28, grid = true, gridX = 0
 
 const save = (name, svg) => writeFileSync(`${OUT}/${name}.svg`, svg);
 
+// ---------- original hero character: a floating, cross-legged meditator ----------
+function characterArt(cx, cy) {
+  const SCALE = 1.35;
+  const defs = `
+    <radialGradient id="chAura" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="${ROSE}" stop-opacity="0.42"/><stop offset="0.55" stop-color="#b8476f" stop-opacity="0.18"/><stop offset="1" stop-color="#b8476f" stop-opacity="0"/></radialGradient>
+    <radialGradient id="chHaloFill" cx="0.5" cy="0.5" r="0.5"><stop offset="0.55" stop-color="#f6c9da" stop-opacity="0"/><stop offset="1" stop-color="#f6c9da" stop-opacity="0.22"/></radialGradient>
+    <linearGradient id="chRobe" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a8426d"/><stop offset="1" stop-color="#5a1d3a"/></linearGradient>
+    <linearGradient id="chSleeve" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8e3560"/><stop offset="1" stop-color="#4a1630"/></linearGradient>
+    <linearGradient id="chLap" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b2548"/><stop offset="1" stop-color="#2e0f21"/></linearGradient>
+    <linearGradient id="chSkin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7d3b8"/><stop offset="1" stop-color="#e5a98a"/></linearGradient>
+    <radialGradient id="chCloud" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#f6dbe8" stop-opacity="0.22"/><stop offset="1" stop-color="#f6dbe8" stop-opacity="0"/></radialGradient>`;
+  const css = `
+    .float { animation: bob 5s ease-in-out infinite; }
+    .shd { transform-box: fill-box; transform-origin: center; animation: shd 5s ease-in-out infinite; }
+    .breathe { transform-box: fill-box; transform-origin: 50% 100%; animation: breathe 4s ease-in-out infinite; }
+    .drift { animation: drift 9s ease-in-out infinite; }
+    .twinkle { animation: blink 2.8s ease-in-out infinite; }
+    @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+    @keyframes shd { 0%,100% { transform: scaleX(1); opacity: .42; } 50% { transform: scaleX(.78); opacity: .24; } }
+    @keyframes breathe { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(1.025); } }
+    @keyframes drift { 0%,100% { transform: translateX(-6px); } 50% { transform: translateX(6px); } }`;
+
+  const wisp = (x, y, rx, ry, dur, begin) =>
+    `<g><circle cx="${x}" cy="${y}" r="8" fill="${ROSE}" opacity=".22"/><circle cx="${x}" cy="${y}" r="2.6" fill="#fff"/>
+     <animateMotion dur="${dur}s" begin="${begin}s" repeatCount="indefinite" path="M0 0 a${rx} ${ry} 0 1 1 ${(x < 0 ? 2 : -2) * rx} 0 a${rx} ${ry} 0 1 1 ${(x < 0 ? -2 : 2) * rx} 0"/></g>`;
+  const spark = (x, y, d) =>
+    `<path d="M${x} ${y - 5} V${y + 5} M${x - 5} ${y} H${x + 5}" stroke="#fbdce8" stroke-width="1.2" stroke-linecap="round" class="twinkle" style="animation-delay:${d}s"/>`;
+
+  const markup = `
+    <g transform="translate(${cx} ${cy + 22}) scale(${SCALE})">
+      <circle cx="0" cy="-26" r="104" fill="url(#chAura)"/>
+      <circle cx="0" cy="-58" r="46" fill="url(#chHaloFill)" stroke="#f0c9d8" stroke-opacity=".6" stroke-width="1.2"/>
+      <circle cx="0" cy="-58" r="55" fill="none" stroke="${ROSE}" stroke-opacity=".45" stroke-dasharray="2 6">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 -58" to="360 0 -58" dur="40s" repeatCount="indefinite"/>
+      </circle>
+      <g class="drift">
+        <ellipse cx="-34" cy="74" rx="52" ry="9" fill="url(#chCloud)"/>
+        <ellipse cx="40" cy="80" rx="60" ry="10" fill="url(#chCloud)"/>
+      </g>
+      <ellipse cx="0" cy="82" rx="46" ry="6" fill="#000" class="shd"/>
+
+      <g class="float">
+        <path d="M -68 40 C -70 20 -34 8 0 8 C 34 8 70 20 68 40 C 66 52 36 56 0 56 C -36 56 -66 52 -68 40 Z" fill="url(#chLap)"/>
+        <path d="M -52 38 C -32 28 -12 36 0 30 M 52 38 C 32 28 12 36 0 30" fill="none" stroke="${ROSE}" stroke-opacity=".28"/>
+        <ellipse cx="-20" cy="50" rx="13" ry="6.5" fill="url(#chSkin)" transform="rotate(-8 -20 50)"/>
+        <ellipse cx="20" cy="50" rx="13" ry="6.5" fill="url(#chSkin)" transform="rotate(8 20 50)"/>
+
+        <g class="breathe">
+          <path d="M -28 -30 C -34 -10 -30 8 -24 14 L 24 14 C 30 8 34 -10 28 -30 C 14 -36 -14 -36 -28 -30 Z" fill="url(#chRobe)"/>
+          <path d="M -12 -34 L 0 -14 L 12 -34" fill="none" stroke="#f3d9c8" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" opacity=".9"/>
+          <rect x="-26" y="8" width="52" height="7" rx="3.5" fill="#f3d9c8" opacity=".92"/>
+          <circle cx="9" cy="11.5" r="4" fill="${ROSE}"/>
+          <path d="M 7 15 C 9 24 5 30 9 38 M 11 15 C 15 22 14 30 18 36" fill="none" stroke="#f3d9c8" stroke-width="2.4" stroke-linecap="round" opacity=".9"/>
+        </g>
+
+        <path d="M -26 -28 C -45 -20 -57 4 -54 34 C -52 40 -43 42 -39 36 C -41 16 -34 0 -22 -8 Z" fill="url(#chSleeve)"/>
+        <path d="M 26 -28 C 45 -20 57 4 54 34 C 52 40 43 42 39 36 C 41 16 34 0 22 -8 Z" fill="url(#chSleeve)"/>
+        <circle cx="-47" cy="38" r="6.2" fill="url(#chSkin)"/><circle cx="-47" cy="38" r="2.6" fill="none" stroke="#c98a6c" stroke-width=".9"/>
+        <circle cx="47" cy="38" r="6.2" fill="url(#chSkin)"/><circle cx="47" cy="38" r="2.6" fill="none" stroke="#c98a6c" stroke-width=".9"/>
+
+        <rect x="-5.5" y="-42" width="11" height="12" fill="#d9987a"/>
+        <ellipse cx="-21" cy="-56" rx="3.6" ry="5.2" fill="#e5a98a"/><ellipse cx="21" cy="-56" rx="3.6" ry="5.2" fill="#e5a98a"/>
+        <circle cx="0" cy="-58" r="21" fill="url(#chSkin)"/>
+        <circle cx="-12.5" cy="-47" r="4" fill="#f08fa8" opacity=".35"/><circle cx="12.5" cy="-47" r="4" fill="#f08fa8" opacity=".35"/>
+        <path d="M -12 -56 q 4.5 4.5 9 0 M 3 -56 q 4.5 4.5 9 0" fill="none" stroke="#3a1428" stroke-width="1.7" stroke-linecap="round"/>
+        <path d="M -13 -62 q 5 -3 10 -1 M 3 -63 q 5 -2 10 1" fill="none" stroke="#2b1220" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M 0 -54 q 1.6 4 -1 5" fill="none" stroke="#c98a6c" stroke-width=".9" stroke-linecap="round"/>
+        <path d="M -4 -44 q 4 3.5 8 0" fill="none" stroke="#a2455f" stroke-width="1.4" stroke-linecap="round"/>
+        <path d="M -23 -54 C -27 -96 27 -96 23 -54 C 20 -61 13 -67 3 -66 C -7 -65 -16 -62 -23 -54 Z" fill="#2b1220"/>
+        <path d="M -11 -80 C -3 -85 8 -83 13 -76" fill="none" stroke="#7a3a5c" stroke-width="1.1" stroke-linecap="round" opacity=".8"/>
+        <path d="M 1 -83 C -2 -93 7 -98 14 -95 C 12 -87 8 -83 1 -83 Z" fill="${ROSE}"/>
+        <circle cx="0" cy="-60.5" r="1.9" fill="#f7b6cd"/><circle cx="0" cy="-60.5" r="4.5" fill="#f7b6cd" opacity=".25"/>
+
+        <path d="M -17 -37 C -8 -30 8 -30 17 -37 L 19 -31 C 8 -22 -8 -22 -19 -31 Z" fill="#f6dbe8"/>
+        <path d="M 16 -31 C 28 -46 42 -36 52 -54" fill="none" stroke="#f3cfdd" stroke-width="5.5" stroke-linecap="round">
+          <animate attributeName="d" dur="3.2s" repeatCount="indefinite" values="M16 -31 C28 -46 42 -36 52 -54; M16 -31 C30 -40 40 -48 56 -46; M16 -31 C28 -46 42 -36 52 -54"/>
+        </path>
+        <path d="M -16 -31 C -27 -44 -38 -36 -47 -50" fill="none" stroke="#e9b8cd" stroke-width="5" stroke-linecap="round">
+          <animate attributeName="d" dur="3.8s" repeatCount="indefinite" values="M-16 -31 C-27 -44 -38 -36 -47 -50; M-16 -31 C-28 -38 -36 -46 -50 -44; M-16 -31 C-27 -44 -38 -36 -47 -50"/>
+        </path>
+      </g>
+
+      ${wisp(92, -20, 92, 34, 16, 0)}${wisp(-80, -52, 80, 30, 21, -7)}
+      ${spark(-78, -88, 0)}${spark(84, -78, 0.9)}${spark(-92, 6, 1.7)}${spark(72, 46, 2.3)}
+    </g>`;
+  return { defs, css, markup };
+}
+
 // ---------- hero ----------
 function hero() {
   const W = 1000, H = 440, cx = 790, cy = 205;
@@ -115,6 +203,7 @@ function hero() {
     <path d="M879 150 V318 H702 M879 150" fill="none" stroke="#d9bd9c" stroke-opacity=".6" stroke-width="1"/>`;
   }
 
+  const CH = P.portrait === 'character' ? characterArt(cx, cy) : null;
   const body = `
     <rect x="48" y="40" width="${pw}" height="34" rx="17" class="pillbox"/>
     <circle cx="68" cy="57" r="4" fill="${ROSE}"/>
@@ -135,9 +224,9 @@ function hero() {
     <circle cx="${cx}" cy="${cy}" r="75" class="ringp"/>
     ${orbit}
     ${orbitDot(105, 14, 0)}${orbitDot(140, 22, -6)}
-    ${P.photo && existsSync(P.photo) ? `<circle cx="${cx}" cy="${cy}" r="150" fill="url(#halo)"/>` : ''}
+    ${CH ? CH.markup : `${P.photo && existsSync(P.photo) ? `<circle cx="${cx}" cy="${cy}" r="150" fill="url(#halo)"/>` : ''}
     <path d="M715 305 V180 A75 75 0 0 1 865 180 V305 Z" fill="url(#archg)" stroke="${ROSE}" stroke-opacity=".55"/>
-    ${inner}
+    ${inner}`}
 
     <line x1="48" y1="398" x2="952" y2="398" stroke="${ROSE}" stroke-opacity=".2"/>
     <text x="48" y="424" class="mono ft">${esc(clip(P.footerLeft, 56))}</text>
@@ -154,10 +243,10 @@ function hero() {
     .rg { fill: none; stroke: ${ROSE}; stroke-opacity: .22; stroke-width: 1; } .rg.d { stroke-dasharray: 3 6; }
     .ringp { fill: none; stroke: ${ROSE}; stroke-width: 1.2; transform-box: fill-box; transform-origin: center; animation: ring 3.6s ease-out infinite; }
     .orb { font-size: 10px; letter-spacing: .2em; fill: ${ROSE_DIM}; }
-    .mono-ini { font-size: 58px; fill: ${TEXT}; text-anchor: middle; }`;
+    .mono-ini { font-size: 58px; fill: ${TEXT}; text-anchor: middle; }${CH ? CH.css : ''}`;
   const defs = `
     <linearGradient id="nameg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6dbe8"/><stop offset="1" stop-color="#d98bb0"/></linearGradient>
-    <linearGradient id="archg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a1d3a"/><stop offset="1" stop-color="#1c0a14"/></linearGradient>${photoDefs}`;
+    <linearGradient id="archg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a1d3a"/><stop offset="1" stop-color="#1c0a14"/></linearGradient>${photoDefs}${CH ? CH.defs : ''}`;
   save('hero', shell(W, H, `${P.first} ${P.last} — ${P.title}`, body, { extraCss: css, extraDefs: defs, gridX: 0.6 }));
 }
 

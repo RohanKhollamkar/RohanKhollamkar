@@ -11,6 +11,7 @@
   "footerLeft": "FINTECH · INSURTECH · E-COMMERCE · MARTECH",
   "footerRight": "PRODUCT & AI STRATEGY · REVENUE & TEAM LEADERSHIP",
   "orbit": ["LLM", "MCP", "AGENTS", "RAG", "EVALS"],
+  "portrait": "character",
   "photo": "assets/photo.jpg",
   "terminal": [
     { "cmd": "whoami", "out": "Rohan Khollamkar · AI Product Leader" },
