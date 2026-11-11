@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="380" viewBox="0 0 1000 380" role="img" aria-label="Expertise">
+  <defs>
+    <radialGradient id="glow" cx="0.82" cy="0.28" r="0.62">
+      <stop offset="0" stop-color="#6e1b3d" stop-opacity="0.9"/><stop offset="0.55" stop-color="#3a0f24" stop-opacity="0.45"/><stop offset="1" stop-color="#14070d" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f0a6c4" stop-opacity="0"/><stop offset="0.5" stop-color="#f0a6c4"/><stop offset="1" stop-color="#f0a6c4" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f0a6c4" stop-opacity="0.9"/><stop offset="1" stop-color="#f0a6c4" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse">
+      <path d="M22 0H0V22" fill="none" stroke="#f0a6c4" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+    <clipPath id="clip"><rect width="1000" height="380" rx="18"/></clipPath><linearGradient id="scanc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f0a6c4" stop-opacity="0"/><stop offset="1" stop-color="#f0a6c4" stop-opacity=".14"/></linearGradient>
+  </defs>
+  <style>
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; } .serif { font-family: Georgia, 'Times New Roman', 'Liberation Serif', serif; } .sans { font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
+    .card { animation: rise .9s ease-out both; }
+    .run { animation: run 6s linear infinite; }
+    .blink { animation: blink 2.4s ease-in-out infinite; }
+    .cursor { animation: cur 1s steps(1) infinite; }
+    .type { animation: type 1s steps(26, end) both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes run { from { stroke-dashoffset: 100; } to { stroke-dashoffset: -100; } }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+    @keyframes cur { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+    @keyframes type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+    @keyframes ring { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(2); opacity: 0; } }
+    @keyframes scan { from { transform: translateX(-80px); } to { transform: translateX(460px); } }
+    @keyframes bars { 0%,100% { transform: scaleY(.45); } 50% { transform: scaleY(1); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+    .lab { font-size: 11px; letter-spacing: .24em; fill: #d68aae; }
+    .tile { fill: #1d0a13; stroke: #4a1c30; }
+    .tl { font-size: 10px; letter-spacing: .2em; fill: #d68aae; }
+    .big { font-size: 46px; fill: none; stroke: #f0a6c4; stroke-opacity: .75; stroke-width: 1; }
+    .lt { font-size: 21px; fill: #f7eef2; }
+    .ct { font-size: 15px; fill: #f7eef2; }
+    .pill { fill: #2a1019; stroke: #6b2a44; } .pt { font-size: 12px; fill: #e9b8cd; }
+    .bar { transform-box: fill-box; transform-origin: bottom; animation: bars 2.6s ease-in-out infinite; }
+    .scanr { animation: scan 6s linear infinite; }
+  </style>
+  <g class="card" clip-path="url(#clip)">
+    <rect width="1000" height="380" rx="18" fill="#14070d"/>
+    <rect width="1000" height="380" fill="url(#glow)"/>
+    <rect x="500" width="500" height="380" fill="url(#grid)"/>
+    <rect x="0.5" y="0.5" width="999" height="379" rx="18" fill="none" stroke="#5a2339"/>
+    <rect x="1" y="1" width="998" height="378" rx="18" fill="none" stroke="url(#edge)" stroke-width="2" pathLength="100" stroke-dasharray="22 78" class="run"/>
+    
+    <text x="48" y="52" class="mono lab">LEADERSHIP</text>
+    <text x="520" y="52" class="mono lab">AI CRAFT</text>
+    <text x="48" y="304" class="mono lab">INDUSTRIES</text>
+    <g><rect x="48" y="70" width="422" height="92" rx="14" class="tile"/>
+      <text x="68" y="132" class="serif big">01</text>
+      <text x="136" y="108" class="mono tl">STRATEGY</text>
+      <text x="136" y="136" class="serif lt">Product &amp; AI Strategy</text>
+      <rect x="430" y="100" width="5" height="32" rx="2.5" fill="#f0a6c4" opacity=".55" class="bar" style="animation-delay:0.00s"/><rect x="439" y="100" width="5" height="32" rx="2.5" fill="#f0a6c4" opacity=".55" class="bar" style="animation-delay:0.25s"/><rect x="448" y="100" width="5" height="32" rx="2.5" fill="#f0a6c4" opacity=".55" class="bar" style="animation-delay:0.50s"/><rect x="457" y="100" width="5" height="32" rx="2.5" fill="#f0a6c4" opacity=".55" class="bar" style="animation-delay:0.75s"/></g><g><rect x="48" y="174" width="422" height="92" rx="14" class="tile"/>
+      <text x="68" y="236" class="serif big">02</text>
+      <text x="136" y="212" class="mono tl">LEADERSHIP</text>
+      <text x="136" y="240" class="serif lt">Revenue &amp; Team Leadership</text>
+      <rect x="430" y="204" width="5" height="32" rx="2.5" fill="#f0a6c4" opacity=".55" class="bar" style="animation-delay:0.40s"/><rect x="439" y="204" width="5" height="32" rx="2.5" fill="#f0a6c4" opacity=".55" class="bar" style="animation-delay:0.65s"/><rect x="448" y="204" width="5" height="32" rx="2.5" fill="#f0a6c4" opacity=".55" class="bar" style="animation-delay:0.90s"/><rect x="457" y="204" width="5" height="32" rx="2.5" fill="#f0a6c4" opacity=".55" class="bar" style="animation-delay:1.15s"/></g><rect x="48" y="318" width="80" height="30" rx="15" class="pill"/><text x="88" y="337" text-anchor="middle" class="mono pt">Fintech</text><rect x="136" y="318" width="95" height="30" rx="15" class="pill"/><text x="183.5" y="337" text-anchor="middle" class="mono pt">Insurtech</text><rect x="239" y="318" width="102" height="30" rx="15" class="pill"/><text x="290" y="337" text-anchor="middle" class="mono pt">E-commerce</text><rect x="349" y="318" width="80" height="30" rx="15" class="pill"/><text x="389" y="337" text-anchor="middle" class="mono pt">MarTech</text><g><rect x="520" y="70" width="212" height="84" rx="12" class="tile"/>
+      <text x="536" y="94" class="mono tl">01</text>
+      <circle cx="714" cy="90" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:0.00s"/>
+      <text x="536" y="120" class="sans ct">AI Architecture &amp;</text><text x="536" y="139" class="sans ct">System Design</text></g><g><rect x="744" y="70" width="212" height="84" rx="12" class="tile"/>
+      <text x="760" y="94" class="mono tl">02</text>
+      <circle cx="938" cy="90" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:0.45s"/>
+      <text x="760" y="120" class="sans ct">AI Quality &amp; Safety</text><text x="760" y="139" class="sans ct">Evaluation</text></g><g><rect x="520" y="166" width="212" height="84" rx="12" class="tile"/>
+      <text x="536" y="190" class="mono tl">03</text>
+      <circle cx="714" cy="186" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:0.90s"/>
+      <text x="536" y="216" class="sans ct">Prompt Engineering</text></g><g><rect x="744" y="166" width="212" height="84" rx="12" class="tile"/>
+      <text x="760" y="190" class="mono tl">04</text>
+      <circle cx="938" cy="186" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:1.35s"/>
+      <text x="760" y="216" class="sans ct">Multi-Agent Systems</text></g><g><rect x="520" y="262" width="212" height="84" rx="12" class="tile"/>
+      <text x="536" y="286" class="mono tl">05</text>
+      <circle cx="714" cy="282" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:1.80s"/>
+      <text x="536" y="312" class="sans ct">MCP Servers</text></g><g><rect x="744" y="262" width="212" height="84" rx="12" class="tile"/>
+      <text x="760" y="286" class="mono tl">06</text>
+      <circle cx="938" cy="282" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:2.25s"/>
+      <text x="760" y="312" class="sans ct">RAG</text></g>
+    <clipPath id="grid-clip"><rect x="520" y="70" width="436" height="276"/></clipPath>
+    <g clip-path="url(#grid-clip)"><rect x="520" y="70" width="80" height="276" fill="url(#scanc)" class="scanr"/></g>
+  </g>
+</svg>

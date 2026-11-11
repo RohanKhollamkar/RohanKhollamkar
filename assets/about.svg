@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="336" viewBox="0 0 1000 336" role="img" aria-label="About">
+  <defs>
+    <radialGradient id="glow" cx="0.82" cy="0.28" r="0.62">
+      <stop offset="0" stop-color="#6e1b3d" stop-opacity="0.9"/><stop offset="0.55" stop-color="#3a0f24" stop-opacity="0.45"/><stop offset="1" stop-color="#14070d" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f0a6c4" stop-opacity="0"/><stop offset="0.5" stop-color="#f0a6c4"/><stop offset="1" stop-color="#f0a6c4" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f0a6c4" stop-opacity="0.9"/><stop offset="1" stop-color="#f0a6c4" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse">
+      <path d="M22 0H0V22" fill="none" stroke="#f0a6c4" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+    <clipPath id="clip"><rect width="1000" height="336" rx="18"/></clipPath>
+  </defs>
+  <style>
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; } .serif { font-family: Georgia, 'Times New Roman', 'Liberation Serif', serif; } .sans { font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
+    .card { animation: rise .9s ease-out both; }
+    .run { animation: run 6s linear infinite; }
+    .blink { animation: blink 2.4s ease-in-out infinite; }
+    .cursor { animation: cur 1s steps(1) infinite; }
+    .type { animation: type 1s steps(26, end) both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes run { from { stroke-dashoffset: 100; } to { stroke-dashoffset: -100; } }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+    @keyframes cur { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+    @keyframes type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+    @keyframes ring { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(2); opacity: 0; } }
+    @keyframes scan { from { transform: translateX(-80px); } to { transform: translateX(460px); } }
+    @keyframes bars { 0%,100% { transform: scaleY(.45); } 50% { transform: scaleY(1); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+    .term { fill: #0f0509; stroke: #5a2339; }
+    .tt { font-size: 11px; fill: #8d6f7c; }
+    .tcmd { font-size: 13.5px; fill: #f7eef2; font-weight: 700; } .tout { font-size: 13px; fill: #b7a0ab; }
+    .tile { fill: #1d0a13; stroke: #4a1c30; }
+    .tl { font-size: 10px; letter-spacing: .2em; fill: #d68aae; }
+    .tv { font-size: 30px; fill: #f7eef2; } .ts { font-size: 10px; fill: #b7a0ab; }
+  </style>
+  <g class="card" clip-path="url(#clip)">
+    <rect width="1000" height="336" rx="18" fill="#14070d"/>
+    <rect width="1000" height="336" fill="url(#glow)"/>
+    <rect x="650" width="350" height="336" fill="url(#grid)"/>
+    <rect x="0.5" y="0.5" width="999" height="335" rx="18" fill="none" stroke="#5a2339"/>
+    <rect x="1" y="1" width="998" height="334" rx="18" fill="none" stroke="url(#edge)" stroke-width="2" pathLength="100" stroke-dasharray="22 78" class="run"/>
+    
+    <rect x="48" y="36" width="592" height="264" rx="12" class="term"/>
+    <path d="M48 48 a12 12 0 0 1 12 -12 H628 a12 12 0 0 1 12 12 V68 H48 Z" fill="#1d0a13"/>
+    <circle cx="68" cy="52" r="5" fill="#a2315f"/><circle cx="88" cy="52" r="5" fill="#5a2339"/><circle cx="108" cy="52" r="5" fill="#5a2339"/>
+    <text x="344" y="56" text-anchor="middle" class="mono tt">rohan@portfolio: ~</text>
+    <g class="type" style="animation-delay:0.6s">
+      <text x="72" y="104" class="mono tcmd"><tspan fill="#f0a6c4">$</tspan> whoami</text>
+      <text x="72" y="125" class="mono tout">Rohan Khollamkar · AI Product Leader</text></g><g class="type" style="animation-delay:1.9s">
+      <text x="72" y="156" class="mono tcmd"><tspan fill="#f0a6c4">$</tspan> experience</text>
+      <text x="72" y="177" class="mono tout">6+ years · product management × machine learning</text></g><g class="type" style="animation-delay:3.2s">
+      <text x="72" y="208" class="mono tcmd"><tspan fill="#f0a6c4">$</tspan> industries</text>
+      <text x="72" y="229" class="mono tout">Fintech · Insurtech · E-commerce · MarTech</text></g><g class="type" style="animation-delay:4.5s">
+      <text x="72" y="260" class="mono tcmd"><tspan fill="#f0a6c4">$</tspan> focus</text>
+      <text x="72" y="281" class="mono tout">AI strategy · agent systems · quality &amp; safety evals<tspan class="cursor" fill="#f0a6c4"> ▍</tspan></text></g><g><rect x="664" y="36" width="288" height="80" rx="12" class="tile"/>
+      <rect x="664" y="48" width="3" height="56" rx="1.5" fill="#f0a6c4"/>
+      <text x="686" y="60" class="mono tl">EXPERIENCE</text>
+      <text x="686" y="90" class="serif tv">6+ years</text>
+      <text x="686" y="106" class="mono ts">product management × machine learning</text></g><g><rect x="664" y="128" width="288" height="80" rx="12" class="tile"/>
+      <rect x="664" y="140" width="3" height="56" rx="1.5" fill="#f0a6c4"/>
+      <text x="686" y="152" class="mono tl">INDUSTRIES</text>
+      <text x="686" y="182" class="serif tv">4</text>
+      <text x="686" y="198" class="mono ts">Fintech · Insurtech · E-commerce · MarTech</text></g><g><rect x="664" y="220" width="288" height="80" rx="12" class="tile"/>
+      <rect x="664" y="232" width="3" height="56" rx="1.5" fill="#f0a6c4"/>
+      <text x="686" y="244" class="mono tl">AI DISCIPLINES</text>
+      <text x="686" y="274" class="serif tv">6</text>
+      <text x="686" y="290" class="mono ts">architecture to safety evaluation</text></g>
+  </g>
+</svg>

@@ -1,0 +1,39 @@
+{
+  "_help": "Edit the text here and re-run `node build-profile.mjs`. Optional photo: put a square-ish JPG/PNG at the path in 'photo' and it appears inside the arch frame; otherwise initials are shown.",
+  "first": "Rohan",
+  "last": "Khollamkar",
+  "user": "RohanKhollamkar",
+  "title": "AI Product Leader",
+  "prompt": { "path": "~/rohan", "cmd": "ship --ai-products" },
+  "eyebrow": "AI · PRODUCT · STRATEGY",
+  "headline": "AI PRODUCT LEADER · PRODUCT × MACHINE LEARNING",
+  "tagline": "Turning machine learning into products people trust.",
+  "footerLeft": "FINTECH · INSURTECH · E-COMMERCE · MARTECH",
+  "footerRight": "PRODUCT & AI STRATEGY · REVENUE & TEAM LEADERSHIP",
+  "orbit": ["LLM", "MCP", "AGENTS", "RAG", "EVALS"],
+  "photo": "assets/photo.jpg",
+  "terminal": [
+    { "cmd": "whoami", "out": "Rohan Khollamkar · AI Product Leader" },
+    { "cmd": "experience", "out": "6+ years · product management × machine learning" },
+    { "cmd": "industries", "out": "Fintech · Insurtech · E-commerce · MarTech" },
+    { "cmd": "focus", "out": "AI strategy · agent systems · quality & safety evals" }
+  ],
+  "stats": [
+    { "label": "EXPERIENCE", "value": "6+ years", "sub": "product management × machine learning" },
+    { "label": "INDUSTRIES", "value": "4", "sub": "Fintech · Insurtech · E-commerce · MarTech" },
+    { "label": "AI DISCIPLINES", "value": "6", "sub": "architecture to safety evaluation" }
+  ],
+  "leadership": ["Product & AI Strategy", "Revenue & Team Leadership"],
+  "craft": [
+    "AI Architecture & System Design",
+    "AI Quality & Safety Evaluation",
+    "Prompt Engineering",
+    "Multi-Agent Systems",
+    "MCP Servers",
+    "RAG"
+  ],
+  "industries": ["Fintech", "Insurtech", "E-commerce", "MarTech"],
+  "email": "rohankhollamkar@gmail.com",
+  "linkedin": "https://www.linkedin.com/in/rohankhollamkar/",
+  "linkedinHandle": "rohankhollamkar"
+}

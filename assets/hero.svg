@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="440" viewBox="0 0 1000 440" role="img" aria-label="Rohan Khollamkar — AI Product Leader">
+  <defs>
+    <radialGradient id="glow" cx="0.82" cy="0.28" r="0.62">
+      <stop offset="0" stop-color="#6e1b3d" stop-opacity="0.9"/><stop offset="0.55" stop-color="#3a0f24" stop-opacity="0.45"/><stop offset="1" stop-color="#14070d" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f0a6c4" stop-opacity="0"/><stop offset="0.5" stop-color="#f0a6c4"/><stop offset="1" stop-color="#f0a6c4" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f0a6c4" stop-opacity="0.9"/><stop offset="1" stop-color="#f0a6c4" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse">
+      <path d="M22 0H0V22" fill="none" stroke="#f0a6c4" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+    <clipPath id="clip"><rect width="1000" height="440" rx="18"/></clipPath>
+    <linearGradient id="nameg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6dbe8"/><stop offset="1" stop-color="#d98bb0"/></linearGradient>
+    <linearGradient id="archg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a1d3a"/><stop offset="1" stop-color="#1c0a14"/></linearGradient>
+  </defs>
+  <style>
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; } .serif { font-family: Georgia, 'Times New Roman', 'Liberation Serif', serif; } .sans { font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
+    .card { animation: rise .9s ease-out both; }
+    .run { animation: run 6s linear infinite; }
+    .blink { animation: blink 2.4s ease-in-out infinite; }
+    .cursor { animation: cur 1s steps(1) infinite; }
+    .type { animation: type 1s steps(26, end) both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes run { from { stroke-dashoffset: 100; } to { stroke-dashoffset: -100; } }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+    @keyframes cur { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+    @keyframes type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+    @keyframes ring { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(2); opacity: 0; } }
+    @keyframes scan { from { transform: translateX(-80px); } to { transform: translateX(460px); } }
+    @keyframes bars { 0%,100% { transform: scaleY(.45); } 50% { transform: scaleY(1); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+    .pillbox { fill: #1d0a13; stroke: #5a2339; }
+    .pr { font-size: 12px; fill: #b7a0ab; } .prc { fill: #f7eef2; font-weight: 700; }
+    .eyebrow { font-size: 12px; letter-spacing: .26em; fill: #d68aae; }
+    .nm { font-size: 88px; fill: #f7eef2; } .nm.it { font-style: italic; }
+    .hd { font-size: 12.5px; letter-spacing: .16em; fill: #f7eef2; font-weight: 700; }
+    .tg { font-size: 20px; font-style: italic; fill: #b7a0ab; }
+    .ft { font-size: 10.5px; letter-spacing: .14em; fill: #8d6f7c; }
+    .rg { fill: none; stroke: #f0a6c4; stroke-opacity: .22; stroke-width: 1; } .rg.d { stroke-dasharray: 3 6; }
+    .ringp { fill: none; stroke: #f0a6c4; stroke-width: 1.2; transform-box: fill-box; transform-origin: center; animation: ring 3.6s ease-out infinite; }
+    .orb { font-size: 10px; letter-spacing: .2em; fill: #d68aae; }
+    .mono-ini { font-size: 58px; fill: #f7eef2; text-anchor: middle; }
+  </style>
+  <g class="card" clip-path="url(#clip)">
+    <rect width="1000" height="440" rx="18" fill="#14070d"/>
+    <rect width="1000" height="440" fill="url(#glow)"/>
+    <rect x="600" width="400" height="440" fill="url(#grid)"/>
+    <rect x="0.5" y="0.5" width="999" height="439" rx="18" fill="none" stroke="#5a2339"/>
+    <rect x="1" y="1" width="998" height="438" rx="18" fill="none" stroke="url(#edge)" stroke-width="2" pathLength="100" stroke-dasharray="22 78" class="run"/>
+    
+    <rect x="48" y="40" width="254" height="34" rx="17" class="pillbox"/>
+    <circle cx="68" cy="57" r="4" fill="#f0a6c4"/>
+    <text x="82" y="61.5" class="mono pr">~/rohan <tspan fill="#f0a6c4">$</tspan> <tspan class="prc">ship --ai-products</tspan></text>
+
+    <line x1="48" y1="122" x2="82" y2="122" stroke="#d68aae" stroke-opacity=".6"/>
+    <text x="94" y="126" class="mono eyebrow">AI · PRODUCT · STRATEGY</text>
+
+    <text x="46" y="204" class="serif nm">Rohan</text>
+    <text x="46" y="294" class="serif nm it" fill="url(#nameg)">Khollamkar<tspan fill="#f0a6c4">.</tspan></text>
+    <rect x="48" y="310" width="520" height="2" fill="url(#fade)"/>
+
+    <text x="48" y="346" class="mono hd">AI PRODUCT LEADER · PRODUCT × MACHINE LEARNING</text>
+    <text x="48" y="380" class="serif tg">Turning machine learning into products people trust.</text>
+
+    <circle cx="790" cy="205" r="105" class="rg"/>
+    <circle cx="790" cy="205" r="140" class="rg d"/>
+    <circle cx="790" cy="205" r="75" class="ringp"/>
+    <circle cx="849.2" cy="78.1" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:0s"/>
+    <text x="859.2" y="81.6" text-anchor="start" class="mono orb">LLM</text><circle cx="929.5" cy="192.8" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:0.4s"/>
+    <text x="939.5" y="196.3" text-anchor="start" class="mono orb">MCP</text><circle cx="897.2" cy="295.0" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:0.8s"/>
+    <text x="907.2" y="298.5" text-anchor="start" class="mono orb">AGENTS</text><circle cx="682.8" cy="295.0" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:1.2000000000000002s"/>
+    <text x="672.8" y="298.5" text-anchor="end" class="mono orb">RAG</text><circle cx="668.8" cy="135.0" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:1.6s"/>
+    <text x="658.8" y="138.5" text-anchor="end" class="mono orb">EVALS</text>
+    <circle cx="895" cy="205" r="3" fill="#fff"><animateMotion dur="14s" begin="0s" repeatCount="indefinite" path="M0 0 A105 105 0 1 1 -210 0 A105 105 0 1 1 0 0"/></circle><circle cx="930" cy="205" r="3" fill="#fff"><animateMotion dur="22s" begin="-6s" repeatCount="indefinite" path="M0 0 A140 140 0 1 1 -280 0 A140 140 0 1 1 0 0"/></circle>
+    <path d="M715 305 V180 A75 75 0 0 1 865 180 V305 Z" fill="url(#archg)" stroke="#f0a6c4" stroke-opacity=".55"/>
+    <text x="790" y="233" text-anchor="middle" class="serif mono-ini">RK</text>
+
+    <line x1="48" y1="398" x2="952" y2="398" stroke="#f0a6c4" stroke-opacity=".2"/>
+    <text x="48" y="424" class="mono ft">FINTECH · INSURTECH · E-COMMERCE · MARTECH</text>
+    <text x="952" y="424" text-anchor="end" class="mono ft">PRODUCT &amp; AI STRATEGY · REVENUE &amp; TEAM LEADERSHIP</text>
+  </g>
+</svg>
