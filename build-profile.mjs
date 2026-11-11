@@ -212,8 +212,8 @@ function hero() {
     <line x1="48" y1="122" x2="82" y2="122" stroke="${ROSE_DIM}" stroke-opacity=".6"/>
     <text x="94" y="126" class="mono eyebrow">${esc(P.eyebrow)}</text>
 
-    <text x="46" y="204" class="serif nm">${esc(P.first)}</text>
-    <text x="46" y="294" class="serif nm it" fill="url(#nameg)">${esc(P.last)}<tspan fill="${ROSE}">.</tspan></text>
+    <text x="46" y="204" class="serif nm it">${esc(P.first)}</text>
+    <text x="46" y="294" class="serif nm it" fill="url(#nameg)">${esc(P.last)}</text>
     <rect x="48" y="310" width="520" height="2" fill="url(#fade)"/>
 
     <text x="48" y="346" class="mono hd">${esc(clip(P.headline, 56))}</text>
