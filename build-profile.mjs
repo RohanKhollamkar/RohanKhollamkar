@@ -172,8 +172,8 @@ function hero() {
   const W = 1000, H = 440, cx = 790, cy = 205;
   const pw = Math.ceil((P.prompt.path.length + P.prompt.cmd.length + 3) * 7.2 + 52);
 
-  const angles = [-65, -5, 40, 140, 210];
-  const orbit = P.orbit.slice(0, 5).map((label, i) => {
+  const angles = [-65, -5, 40, 140, 210, 180];
+  const orbit = P.orbit.slice(0, 6).map((label, i) => {
     const a = (angles[i] * Math.PI) / 180;
     const x = cx + 140 * Math.cos(a), y = cy + 140 * Math.sin(a);
     const right = Math.cos(a) >= 0;
