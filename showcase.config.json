@@ -3,6 +3,9 @@
   "count": 2,
   "exclude": [],
   "repos": {
+    "directoragent": {
+      "tags": ["Python", "storyboard", "higgsfield-ai", "mcp", "multi-agent-systems"]
+    },
     "_example": {
       "title": "Display Title",
       "eyebrow": "AI · AGENTS · 2026",
