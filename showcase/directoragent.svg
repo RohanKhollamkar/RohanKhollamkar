@@ -41,7 +41,7 @@
   <rect x=".5" y=".5" width="999" height="359" rx="20" fill="none" stroke="#f0a6c4" stroke-opacity=".28"/>
 
   <g class="in">
-    <text x="44" y="60" class="mono" font-size="12" letter-spacing="2.5" fill="#f0a6c4">01 · PYTHON · 2026</text>
+    <text x="44" y="60" class="mono" font-size="12" letter-spacing="2.5" fill="#f0a6c4">01 · HIGGSFIELD-AI · MCP · 2026</text>
     <text x="44" y="114" class="serif" font-size="44" fill="#f7eef2">Directoragent</text>
     <text x="44" y="150" class="sans" font-size="15" fill="#b7a0ab">An AI agent that takes a single photo and a scene description</text>
     <text x="44" y="173" class="sans" font-size="15" fill="#b7a0ab">to produce a production-quality storyboard — a sequenced set…</text>
@@ -50,20 +50,20 @@
   <g class="in" style="animation-delay:.2s">
     <line x1="44" y1="232" x2="590" y2="232" stroke="#f0a6c4" stroke-opacity=".18"/>
     <text x="44" y="266" class="serif" font-size="32" fill="#f0a6c4">99%</text><text x="44" y="286" class="mono" font-size="10" letter-spacing="1" fill="#b7a0ab">PYTHON</text><text x="222" y="266" class="serif" font-size="32" fill="#f0a6c4">2</text><text x="222" y="286" class="mono" font-size="10" letter-spacing="1" fill="#b7a0ab">LANGUAGES</text><text x="400" y="266" class="serif" font-size="26" fill="#f0a6c4">Oct 2026</text><text x="400" y="286" class="mono" font-size="10" letter-spacing="1" fill="#b7a0ab">LAST PUSH</text>
-    <rect x="44" y="306" width="64" height="24" rx="12" fill="#f0a6c4" fill-opacity=".08" stroke="#f0a6c4" stroke-opacity=".4"/><text x="76" y="322" class="mono" font-size="11" fill="#f0a6c4" text-anchor="middle">Python</text><rect x="116" y="306" width="58" height="24" rx="12" fill="#f0a6c4" fill-opacity=".08" stroke="#f0a6c4" stroke-opacity=".4"/><text x="145" y="322" class="mono" font-size="11" fill="#f0a6c4" text-anchor="middle">Shell</text>
+    <rect x="44" y="306" width="64" height="24" rx="12" fill="#f0a6c4" fill-opacity=".08" stroke="#f0a6c4" stroke-opacity=".4"/><text x="76" y="322" class="mono" font-size="11" fill="#f0a6c4" text-anchor="middle">Python</text><rect x="116" y="306" width="58" height="24" rx="12" fill="#f0a6c4" fill-opacity=".08" stroke="#f0a6c4" stroke-opacity=".4"/><text x="145" y="322" class="mono" font-size="11" fill="#f0a6c4" text-anchor="middle">Shell</text><rect x="182" y="306" width="111" height="24" rx="12" fill="#f0a6c4" fill-opacity=".08" stroke="#f0a6c4" stroke-opacity=".4"/><text x="237.5" y="322" class="mono" font-size="11" fill="#f0a6c4" text-anchor="middle">higgsfield-ai</text><rect x="301" y="306" width="44" height="24" rx="12" fill="#f0a6c4" fill-opacity=".08" stroke="#f0a6c4" stroke-opacity=".4"/><text x="323" y="322" class="mono" font-size="11" fill="#f0a6c4" text-anchor="middle">mcp</text><rect x="353" y="306" width="145" height="24" rx="12" fill="#f0a6c4" fill-opacity=".08" stroke="#f0a6c4" stroke-opacity=".4"/><text x="425.5" y="322" class="mono" font-size="11" fill="#f0a6c4" text-anchor="middle">multi-agent-syste…</text>
   </g>
 
   <g class="in" style="animation-delay:.35s">
     <g transform="translate(628 36)">
       <rect width="336" height="288" rx="16" fill="#1c1017" fill-opacity=".75" stroke="#f0a6c4" stroke-opacity=".2"/>
-      <text x="18" y="28" class="mono" font-size="11" letter-spacing="2.5" fill="#f0a6c4">FLOW</text>
+      <text x="18" y="28" class="mono" font-size="11" letter-spacing="2.5" fill="#f0a6c4">HIGGSFIELD-AI</text>
       <path class="dash" d="M92 80 C 116 80, 112 142, 136 142" fill="none" stroke="#f0a6c4" stroke-opacity=".7" stroke-dasharray="4 7" style="animation-delay:-0.0s"/><path class="dash" d="M92 142 C 116 142, 112 142, 136 142" fill="none" stroke="#f0a6c4" stroke-opacity=".7" stroke-dasharray="4 7" style="animation-delay:-0.3s"/><path class="dash" d="M92 204 C 116 204, 112 142, 136 142" fill="none" stroke="#f0a6c4" stroke-opacity=".7" stroke-dasharray="4 7" style="animation-delay:-0.6s"/>
       <path class="dash" d="M212 142 H 252" fill="none" stroke="#f0a6c4" stroke-dasharray="4 7"/>
       <g class="blink" style="animation-delay:0s"><rect x="24" y="64" width="68" height="32" rx="8" fill="#1c1017" stroke="#f0a6c4" stroke-opacity="0.7" stroke-width="1"/><text x="58" y="84" class="mono" font-size="10" fill="#b7a0ab" text-anchor="middle">01</text></g><g class="blink" style="animation-delay:0.5s"><rect x="24" y="126" width="68" height="32" rx="8" fill="#1c1017" stroke="#f0a6c4" stroke-opacity="0.7" stroke-width="1"/><text x="58" y="146" class="mono" font-size="10" fill="#b7a0ab" text-anchor="middle">02</text></g><g class="blink" style="animation-delay:1s"><rect x="24" y="188" width="68" height="32" rx="8" fill="#1c1017" stroke="#f0a6c4" stroke-opacity="0.7" stroke-width="1"/><text x="58" y="208" class="mono" font-size="10" fill="#b7a0ab" text-anchor="middle">03</text></g>
       <g class="blink" style="animation-delay:1.5s"><rect x="136" y="114" width="76" height="56" rx="8" fill="#2a1622" stroke="#f0a6c4" stroke-opacity="1" stroke-width="1.5"/><text x="174" y="146" class="mono" font-size="10" fill="#f0a6c4" text-anchor="middle">CORE</text></g>
       <g class="blink" style="animation-delay:2s"><rect x="252" y="126" width="62" height="32" rx="8" fill="#1c1017" stroke="#f0a6c4" stroke-opacity="0.7" stroke-width="1"/><text x="283" y="146" class="mono" font-size="10" fill="#b7a0ab" text-anchor="middle">OUT</text></g>
       <circle class="ripple" cx="283" cy="142" r="14" fill="none" stroke="#f0a6c4" style="animation-delay:2s"/>
-      <text x="18" y="272" class="mono" font-size="10" fill="#b7a0ab">python · shell</text>
+      <text x="18" y="272" class="mono" font-size="10" fill="#b7a0ab">python · shell · higgsfield-ai</text>
     </g>
   </g>
 </svg>
