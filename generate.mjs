@@ -135,7 +135,7 @@ function model(r, langs, i) {
     { value: monthYear(r.pushed_at), label: 'last push' },
   ];
   const autoTags = [...new Set([...langNames.slice(0, 2), ...topics.slice(0, 3)])];
-  const visual = VISUALS.includes(o.visual) ? o.visual : pickVisual(r);
+  const visual = o.visual in DRAW ? o.visual : pickVisual(r); // 'storyboard' is config-only, never auto-picked
   const tags = (o.tags?.length ? o.tags : autoTags.length ? autoTags : [r.language || 'Code']).slice(0, 5);
 
   return {
@@ -153,6 +153,9 @@ function model(r, langs, i) {
     caption: o.caption || tags.slice(0, 3).join(' · ').toLowerCase(),
     chip: o.chip?.length ? o.chip : ['Q · what does it say?', 'A · answer, with source'],
     states: o.states?.length ? o.states : ['running', 'success', 'failed'],
+    cost: o.cost,
+    thresholds: o.thresholds,
+    models: o.models,
   };
 }
 
@@ -224,7 +227,84 @@ function visPipeline(m) {
       ${pills}`;
 }
 
-const DRAW = { network: visNetwork, documents: visDocuments, flow: visFlow, pipeline: visPipeline };
+// storyboard: planner (LLM) -> executor fans out six shot jobs -> assembly, with pre-flight estimate vs actual cost
+function visStoryboard(m) {
+  const T = 12; // seconds per loop
+  const f = t => (t / T).toFixed(4);
+  // opacity 0 until `at` seconds, then visible until the loop resets
+  const show = at => `<animate attributeName="opacity" dur="${T}s" repeatCount="indefinite" values="0;0;1;1;0" keyTimes="0;${f(at)};${f(at + 0.15)};0.955;1"/>`;
+  const grow = (w, from, to) => `<animate attributeName="width" dur="${T}s" repeatCount="indefinite" values="0;0;${w};${w};0" keyTimes="0;${f(from)};${f(to)};0.955;1"/>`;
+  const box = (x, y, w, h, strong) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="7" fill="${strong ? '#2a1622' : PANEL_BG}" stroke="${ROSE}" stroke-opacity="${strong ? 1 : 0.75}" stroke-width="${strong ? 1.4 : 1}"/>`;
+  const chip = (x, y, w, t) => `<rect x="${x}" y="${y}" width="${w}" height="15" rx="7.5" fill="${ROSE}" fill-opacity=".16" stroke="${ROSE}" stroke-opacity=".6"/><text x="${x + w / 2}" y="${y + 11}" class="mono" font-size="8.5" fill="${ROSE}" text-anchor="middle">${t}</text>`;
+  const OK = '#8fd6a8', BAD = '#e2707f', AMBER = '#ffc857'; // amber = everything about the drift threshold
+  const est = Number(m.cost?.estimate ?? 9.3), act = Number(m.cost?.actual ?? 8.08);
+  const money = n => `$${n.toFixed(2)}`;
+  const barW = 126, actW = Math.max(4, Math.round(barW * Math.min(act / est, 1)));
+  const saved = est - act, pct = Math.round((saved / est) * 100);
+
+  const models = m.models?.length ? m.models : ['seedance 2.0', 'wan 2.6', 'veo 3.1', 'kling 3.0', 'sora 2', 'runway gen-4'];
+  const thresholds = (m.thresholds?.length ? m.thresholds : [0.78, 0.86, 0.9, 0.82, 0.88, 0.8]).map(Number); // per shot: render class + model
+  const attempts = [1, 1, 2, 1, 3, 1];         // illustrative: shot 03 passes on its 2nd try, shot 05 on its 3rd
+  const start = k => 2 + k * 0.25, step = 1;   // each attempt takes `step` seconds
+  const pass = k => start(k) + attempts[k] * step;
+  const by = k => 93 + k * 12;                 // text baseline of lane k
+
+  const lanes = [0, 1, 2, 3, 4, 5].map(k => {
+    const y = by(k), mid = y - 3;
+    const pips = [0, 1, 2].map(j => {
+      const px = 270 + j * 10;
+      const base = `<circle cx="${px}" cy="${mid}" r="2.6" fill="none" stroke="${ROSE_DIM}" stroke-opacity=".7"/>`;
+      if (j >= attempts[k]) return base;
+      const last = j === attempts[k] - 1;
+      return `${base}<circle cx="${px}" cy="${mid}" r="2.6" fill="${last ? OK : BAD}">${show(start(k) + (j + 1) * step)}</circle>`;
+    }).join('');
+    return `<path class="dash" d="M308 ${mid} H301" fill="none" stroke="${ROSE}" stroke-opacity=".7" stroke-dasharray="2 3"/>
+      <path d="M303.5 ${mid - 2.5} L300 ${mid} L303.5 ${mid + 2.5}" fill="none" stroke="${ROSE}" stroke-opacity=".8" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="32" y="${y - 8.5}" width="266" height="11" rx="3" fill="${PANEL_BG}" stroke="${ROSE_DIM}" stroke-opacity=".45"/>
+      <rect x="32" y="${y - 8.5}" width="266" height="11" rx="3" fill="${ROSE}" fill-opacity=".16" stroke="${ROSE}" stroke-opacity=".8">${show(pass(k))}</rect>
+      <text x="38" y="${y}" class="mono" font-size="8.5" fill="${MUTED}">${pad2(k + 1)}</text>
+      <text x="58" y="${y}" class="mono" font-size="8.5" fill="${TEXT}">${esc(clip(models[k % models.length], 16))}</text>
+      <text x="186" y="${y}" class="mono" font-size="8.5" font-weight="700" fill="${AMBER}" text-anchor="middle">${thresholds[k % thresholds.length].toFixed(2)}</text>
+      ${pips}
+      <path d="M32 ${mid} H24" fill="none" stroke="${ROSE_DIM}" stroke-opacity=".6"/>`;
+  }).join('');
+  const strip = [0, 1, 2, 3, 4, 5].map(k => `<rect x="${92 + k * 9}" y="174" width="7" height="10" rx="1.5" fill="none" stroke="${ROSE_DIM}" stroke-opacity=".6"/><rect x="${92 + k * 9}" y="174" width="7" height="10" rx="1.5" fill="${ROSE}">${show(pass(k) + 0.2)}</rect>`).join('');
+  const done = Math.max(...[0, 1, 2, 3, 4, 5].map(pass));
+
+  return `<g class="blink">${box(18, 40, 150, 26, false)}</g>
+      <text x="27" y="57" class="mono" font-size="9.5" fill="${TEXT}">VISION PLANNER</text>${chip(125, 45.5, 36, 'LLM')}
+      <path class="dash" d="M168 53 H190" fill="none" stroke="${ROSE}" stroke-dasharray="3 4"/>
+      <circle r="2.4" fill="#fff"><animateMotion dur="1.4s" repeatCount="indefinite" path="M168 53 H190"/></circle>
+      ${box(190, 40, 128, 26, true)}
+      <text x="200" y="57" class="mono" font-size="9.5" fill="${ROSE}">EXECUTOR</text>${chip(274, 45.5, 36, 'DAG')}
+      <text x="38" y="80" class="mono" font-size="7" letter-spacing=".6" fill="${MUTED}">SHOT · MODEL</text>
+      <text x="186" y="80" class="mono" font-size="7" letter-spacing=".6" font-weight="700" fill="${AMBER}" text-anchor="middle">DRIFT THRESHOLD PER SHOT</text>
+      <text x="298" y="80" class="mono" font-size="7" letter-spacing=".4" fill="${MUTED}" text-anchor="end">≤3 TRIES</text>
+      <path class="dash" d="M308 66 V${by(5) - 3}" fill="none" stroke="${ROSE}" stroke-opacity=".7" stroke-dasharray="3 4"/>
+      ${lanes}
+      <path d="M24 ${by(0) - 3} V164" fill="none" stroke="${ROSE_DIM}" stroke-opacity=".6"/>
+      <path d="M21 161.5 L24 166 L27 161.5" fill="none" stroke="${ROSE}" stroke-opacity=".8" stroke-linecap="round" stroke-linejoin="round"/>
+      ${box(18, 166, 300, 26, false)}
+      <text x="27" y="183" class="mono" font-size="9.5" fill="${TEXT}">ASSEMBLY</text>${strip}
+      <path d="M152 179 H166" fill="none" stroke="${ROSE}" stroke-opacity=".8"/><path d="M162 175.5 L166.5 179 L162 182.5" fill="none" stroke="${ROSE}" stroke-opacity=".8" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="174" y="171" width="136" height="16" rx="8" fill="none" stroke="${ROSE_DIM}" stroke-opacity=".6"/>
+      <rect x="174" y="171" width="136" height="16" rx="8" fill="${ROSE}">${show(done + 0.7)}</rect>
+      <text x="242" y="182.5" class="mono" font-size="8.5" letter-spacing=".8" fill="${MUTED}" text-anchor="middle">FINAL STORYBOARD</text>
+      <text x="242" y="182.5" class="mono" font-size="8.5" letter-spacing=".8" font-weight="700" fill="#14070d" text-anchor="middle">FINAL STORYBOARD${show(done + 0.7)}</text>
+
+      <text x="18" y="211" class="mono" font-size="8.5" letter-spacing=".8" fill="${MUTED}">$ PRE-FLIGHT EST</text>
+      <rect x="128" y="205" width="${barW}" height="6" rx="3" fill="none" stroke="${ROSE_DIM}" stroke-opacity=".5" stroke-dasharray="2 3"/>
+      <rect x="128" y="205" width="${barW}" height="6" rx="3" fill="${ROSE_DIM}" fill-opacity=".6">${grow(barW, 0.3, 1.3)}</rect>
+      <text x="318" y="212" class="mono" font-size="10" font-weight="700" fill="${TEXT}" text-anchor="end">${money(est)}${show(1.3)}</text>
+      <text x="18" y="227" class="mono" font-size="8.5" letter-spacing=".8" fill="${MUTED}">$ ACTUAL COST</text>
+      <rect x="128" y="221" width="${barW}" height="6" rx="3" fill="none" stroke="${ROSE_DIM}" stroke-opacity=".3"/>
+      <rect x="128" y="221" width="${actW}" height="6" rx="3" fill="${ROSE}">${grow(actW, start(0), done)}</rect>
+      <text x="318" y="228" class="mono" font-size="10" font-weight="700" fill="${ROSE}" text-anchor="end">${money(act)}${show(done)}</text>
+      <line x1="${128 + barW}" y1="201" x2="${128 + barW}" y2="231" stroke="${ROSE}" stroke-opacity=".6" stroke-dasharray="2 2"/>
+      ${saved > 0 ? `<text x="318" y="246" class="mono" font-size="9" fill="${OK}" text-anchor="end">saved ${money(saved)} · ${pct}% under estimate${show(done + 1.2)}</text>` : ''}`;
+}
+
+const DRAW = { network: visNetwork, documents: visDocuments, flow: visFlow, pipeline: visPipeline, storyboard: visStoryboard };
 
 // ---------- card ----------
 function render(m) {
@@ -307,7 +387,7 @@ function render(m) {
       <rect width="${PW}" height="${PH}" rx="16" fill="${PANEL_BG}" fill-opacity=".75" stroke="${ROSE}" stroke-opacity=".2"/>
       <text x="18" y="28" class="mono" font-size="11" letter-spacing="2.5" fill="${ROSE}">${esc(clip(m.label, 22).toUpperCase())}</text>
       ${DRAW[m.visual](m)}
-      <text x="18" y="${PH - 16}" class="mono" font-size="10" fill="${MUTED}">${esc(clip(m.caption, 46))}</text>
+      <text x="18" y="${PH - 16}" class="mono" font-size="${m.caption.length > 48 ? 8 : 10}" fill="${MUTED}">${esc(clip(m.caption, m.caption.length > 48 ? 62 : 46))}</text>
     </g>
   </g>
 </svg>

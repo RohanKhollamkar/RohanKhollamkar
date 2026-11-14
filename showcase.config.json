@@ -1,10 +1,16 @@
 {
-  "_help": "Optional. Repos not listed here get cards built automatically from GitHub data. To customise one, add an entry under 'repos' keyed by the exact repo name, using any of the fields shown in _example. 'visual' is one of: network, documents, flow, pipeline. Delete _example when you add real entries.",
+  "_help": "Optional. Repos not listed here get cards built automatically from GitHub data. To customise one, add an entry under 'repos' keyed by the exact repo name, using any of the fields shown in _example. 'visual' is one of: network, documents, flow, pipeline, or storyboard (planner > executor > six shots > assembly; takes 'cost', 'models' and 'thresholds' as in the directoragent entry). Delete _example when you add real entries.",
   "count": 2,
   "exclude": [],
   "repos": {
     "directoragent": {
-      "tags": ["Python", "storyboard", "higgsfield-ai", "mcp", "multi-agent-systems"]
+      "tags": ["Python", "storyboard", "higgsfield-ai", "mcp", "multi-agent-systems"],
+      "visual": "storyboard",
+      "label": "SIX-SHOT PIPELINE",
+      "caption": "higgsfield MCP · directed acyclic graph · Parallel Processing",
+      "cost": { "estimate": 9.30, "actual": 8.08 },
+      "models": ["seedance 2.0", "wan 2.6", "veo 3.1", "kling 3.0", "sora 2", "runway gen-4"],
+      "thresholds": [0.78, 0.86, 0.90, 0.82, 0.88, 0.80]
     },
     "_example": {
       "title": "Display Title",
