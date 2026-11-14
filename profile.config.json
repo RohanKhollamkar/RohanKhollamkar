@@ -56,6 +56,14 @@
       { "tag": "APPLIED", "title": "End-to-End Case Studies", "chips": ["Banking", "Payment Gateways", "AI Integration"] }
     ],
     "cta": "VIEW COURSE ON TOPMATE",
-    "extras": ["70+ interview questions", "10+ frameworks"]
+    "extras": ["70+ interview questions", "10+ frameworks"],
+    "video": {
+      "url": "https://www.youtube.com/watch?v=frK5dXuImUA",
+      "label": "WATCH THE INTRO",
+      "title": "API Integration & Event-Driven Architectures",
+      "sub": "for AI builders and business leaders",
+      "meta": "YOUTUBE · ROHAN KHOLLAMKAR",
+      "thumb": "assets/course-video-thumb.jpg"
+    }
   }
 }

@@ -453,6 +453,50 @@ function course() {
   return true;
 }
 
+// ---------- course intro video tile ----------
+function courseVideo() {
+  const V = P.course && P.course.video;
+  if (!V || !V.url) return false;
+  const W = 1000, H = 236;
+  const fx = 596, fy = 28, fw = 356, fh = 180;   // 16:9 thumbnail frame
+  let thumb = `<rect x="${fx}" y="${fy}" width="${fw}" height="${fh}" rx="12" fill="url(#vph)"/>`;
+  if (V.thumb && existsSync(V.thumb)) {
+    const mime = { '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp' }[extname(V.thumb).toLowerCase()] || 'image/jpeg';
+    const b64 = readFileSync(V.thumb).toString('base64');
+    thumb = `<g clip-path="url(#vclip)"><image href="data:${mime};base64,${b64}" x="${fx}" y="${fy}" width="${fw}" height="${fh}" preserveAspectRatio="xMidYMid slice"/>
+      <rect x="${fx}" y="${fy}" width="${fw}" height="${fh}" fill="#b8476f" opacity=".22"/>
+      <rect x="${fx}" y="${fy}" width="${fw}" height="${fh}" fill="url(#vshade)"/></g>`;
+  }
+  const body = `
+    <text x="48" y="52" class="mono lab">${esc(V.label || 'WATCH THE INTRO')}</text>
+    <g transform="translate(86 128)">
+      <circle r="30" fill="none" stroke="${ROSE}" class="vring"/>
+      <circle r="30" fill="none" stroke="${ROSE}" class="vring" style="animation-delay:1.1s"/>
+      <circle r="30" fill="${ROSE}"/>
+      <path d="M-8 -13 L15 0 L-8 13 Z" fill="#14070d"/>
+    </g>
+    <text x="140" y="118" class="serif vt">${esc(clip(V.title || '', 46))}</text>
+    <text x="140" y="146" class="serif vs">${esc(clip(V.sub || '', 50))}</text>
+    <text x="140" y="176" class="mono vm">${esc(V.meta || 'YOUTUBE')}</text>
+    ${thumb}
+    <rect x="${fx}" y="${fy}" width="${fw}" height="${fh}" rx="12" fill="none" stroke="#6b2a44"/>
+    <g transform="translate(${fx + fw / 2} ${fy + fh / 2 - 6})"><circle r="24" fill="#14070d" fill-opacity=".72" stroke="${ROSE}"/><path d="M-6 -10 L12 0 L-6 10 Z" fill="${ROSE}"/></g>
+    <rect x="${fx + 16}" y="${fy + fh - 16}" width="${fw - 32}" height="3" rx="1.5" fill="#fff" opacity=".22"/>
+    <rect x="${fx + 16}" y="${fy + fh - 16}" width="${fw - 32}" height="3" rx="1.5" fill="${ROSE}" class="vprog"/>`;
+  const css = `
+    .lab { font-size: 11px; letter-spacing: .24em; fill: ${ROSE_DIM}; }
+    .vt { font-size: 21px; fill: ${TEXT}; } .vs { font-size: 18px; font-style: italic; fill: ${ROSE_SOFT}; }
+    .vm { font-size: 10.5px; letter-spacing: .2em; fill: #8d6f7c; }
+    .vring { transform-box: fill-box; transform-origin: center; animation: ring 2.2s ease-out infinite; }
+    .vprog { transform-box: fill-box; transform-origin: left; animation: vprog 9s linear infinite; }
+    @keyframes vprog { from { transform: scaleX(0); } to { transform: scaleX(1); } }`;
+  const defs = `<linearGradient id="vph" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5a1d3a"/><stop offset="1" stop-color="#1d0a13"/></linearGradient>
+    <linearGradient id="vshade" x1="0" y1="0" x2="0" y2="1"><stop offset="0.55" stop-color="#14070d" stop-opacity="0"/><stop offset="1" stop-color="#14070d" stop-opacity=".7"/></linearGradient>
+    <clipPath id="vclip"><rect x="${fx}" y="${fy}" width="${fw}" height="${fh}" rx="12"/></clipPath>`;
+  save('course-video', shell(W, H, `Watch: ${V.title || 'course intro'}`, body, { extraCss: css, extraDefs: defs, grid: false, cx: 0.75, cy: 0.5 }));
+  return true;
+}
+
 // ---------- social buttons + cards ----------
 const iconIn = (x, y, s = 1) => `<g transform="translate(${x} ${y}) scale(${s})"><rect width="22" height="22" rx="4" fill="#fff"/><text x="11" y="17" text-anchor="middle" class="sans" font-size="15" font-weight="800" fill="#0d0508">in</text></g>`;
 const iconMail = (x, y, s = 1) => `<g transform="translate(${x} ${y}) scale(${s})"><rect x="1" y="3" width="22" height="16" rx="2.5" fill="none" stroke="#fff" stroke-width="2"/><path d="M2 5 L12 13 L22 5" fill="none" stroke="#fff" stroke-width="2"/></g>`;
@@ -519,7 +563,9 @@ ${HAS_COURSE ? `
 ${img('sec-course', 'Course')}
 
 <a href="${P.course.url}">${img('course', `${P.course.title} ${P.course.titleSub || ''}`.trim())}</a>
-` : ''}
+${HAS_VIDEO ? `
+<a href="${P.course.video.url}">${img('course-video', `Watch: ${P.course.video.title || 'course intro'}`)}</a>
+` : ''}` : ''}
 ${img('sec-connect', 'Connect')}
 
 <a href="${P.linkedin}">${img('card-linkedin', 'LinkedIn', 'width="49%"')}</a>
@@ -535,6 +581,7 @@ header('sec-about', '01', 'ABOUT', [["Hello, I'm ", false], [P.first, true], ['.
 header('sec-expertise', '02', 'EXPERTISE', [['What I ', false], ['lead & build', true], ['.', false]], 'STRATEGY · AI CRAFT · INDUSTRIES');
 header('sec-work', '03', 'SELECTED WORK', [['Things I’ve ', false], ['built', true], ['.', false]], 'LATEST REPOSITORIES · AUTO-UPDATED');
 const HAS_COURSE = course();
+const HAS_VIDEO = HAS_COURSE && courseVideo();
 if (HAS_COURSE) header('sec-course', '04', 'COURSE', [['Learn ', false], ['with me', true], ['.', false]], 'MASTERCLASS · ON TOPMATE');
 header('sec-connect', HAS_COURSE ? '05' : '04', 'CONNECT', [['Let’s ', false], ['talk', true], ['.', false]], 'FIND ME ONLINE');
 about();

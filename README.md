@@ -28,6 +28,8 @@
 
 <a href="https://topmate.io/rohan4u/new/IfrQOzj2QK"><img src="assets/course.svg" alt="APIs &amp; Event-Driven Systems for AI Builders &amp; Business Leaders" width="100%"></a>
 
+<a href="https://www.youtube.com/watch?v=frK5dXuImUA"><img src="assets/course-video.svg" alt="Watch: API Integration &amp; Event-Driven Architectures" width="100%"></a>
+
 <img src="assets/sec-connect.svg" alt="Connect" width="100%">
 
 <a href="https://www.linkedin.com/in/rohankhollamkar/"><img src="assets/card-linkedin.svg" alt="LinkedIn" width="49%"></a>
