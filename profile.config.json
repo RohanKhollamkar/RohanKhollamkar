@@ -36,5 +36,26 @@
   "industries": ["Fintech", "Insurtech", "E-commerce", "MarTech"],
   "email": "rohankhollamkar@gmail.com",
   "linkedin": "https://www.linkedin.com/in/rohankhollamkar/",
-  "linkedinHandle": "rohankhollamkar"
+  "linkedinHandle": "rohankhollamkar",
+  "course": {
+    "url": "https://topmate.io/rohan4u/new/IfrQOzj2QK",
+    "eyebrow": "COURSE · MASTERCLASS SERIES",
+    "badge": "★ 5.0 · BEST SELLER",
+    "title": "APIs & Event-Driven Systems",
+    "titleSub": "for AI Builders & Business Leaders",
+    "tagline": "Master production-grade APIs and design event-driven architectures, through real integration case studies.",
+    "audience": [
+      ["AI Builders · vibe coders / low-code", "Business Leaders"],
+      ["Product & Program Managers", "Engineering Managers"],
+      ["Junior Developers", "Business Analysts"]
+    ],
+    "features": [
+      { "tag": "ASYNC", "title": "Event-Driven Architectures" },
+      { "tag": "SYNC", "title": "Enterprise API Integration Patterns" },
+      { "tag": "SYNC + ASYNC", "title": "Hybrid Architectures" },
+      { "tag": "APPLIED", "title": "End-to-End Case Studies", "chips": ["Banking", "Payment Gateways", "AI Integration"] }
+    ],
+    "cta": "VIEW COURSE ON TOPMATE",
+    "extras": ["70+ interview questions", "10+ frameworks"]
+  }
 }

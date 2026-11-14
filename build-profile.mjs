@@ -352,6 +352,107 @@ function expertise() {
   save('expertise', shell(W, H, 'Expertise', body, { extraCss: css, extraDefs: defs, gridX: 0.5 }));
 }
 
+// ---------- course card ----------
+function course() {
+  const C = P.course;
+  if (!C || !C.title) return false;
+  const W = 1000, H = 456;
+  const pw = t => Math.ceil(t.length * 7.2 + 26);
+  const pills = C.audience.map((row, r) => {
+    let x = 48;
+    return row.map((t, k) => {
+      const w = pw(t), y = 242 + r * 38, first = r === 0 && k === 0;
+      const out = `<rect x="${x}" y="${y}" width="${w}" height="30" rx="15" class="${first ? 'pill pon' : 'pill'}"/><text x="${x + w / 2}" y="${y + 19}" text-anchor="middle" class="mono ${first ? 'pt pton' : 'pt'}">${esc(t)}</text>`;
+      x += w + 8;
+      return out;
+    }).join('');
+  }).join('');
+
+  // small looping diagrams, one per feature
+  const dot = (path, dur, begin = 0) => `<circle r="2.6" fill="#fff"><animateMotion dur="${dur}s" begin="${begin}s" repeatCount="indefinite" path="${path}"/></circle>`;
+  const icons = [
+    // events: one producer fanning out to three consumers
+    (x, y) => `<g transform="translate(${x} ${y}) scale(.85)"><path d="M0 0 H26 M26 0 L58 -16 M26 0 H58 M26 0 L58 16" class="wire"/>
+      <circle r="5" class="node"/><circle cx="26" r="3.5" fill="${ROSE}"/>
+      <circle cx="62" cy="-16" r="4" class="node"/><circle cx="62" r="4" class="node"/><circle cx="62" cy="16" r="4" class="node"/>
+      ${dot('M0 0 H26 L58 -16', 2.4)}${dot('M0 0 H26 H58', 2.4, 0.8)}${dot('M0 0 H26 L58 16', 2.4, 1.6)}</g>`,
+    // api: request out, response back
+    (x, y) => `<g transform="translate(${x} ${y}) scale(.85)"><rect x="-8" y="-11" width="18" height="22" rx="4" class="node"/><rect x="52" y="-11" width="18" height="22" rx="4" class="node"/>
+      <path d="M14 -5 H48 M48 5 H14" class="wire"/>
+      ${dot('M14 -5 H48', 1.6)}${dot('M48 5 H14', 1.6, 0.8)}</g>`,
+    // hybrid: a sync call that also emits an event
+    (x, y) => `<g transform="translate(${x} ${y}) scale(.85)"><rect x="-8" y="-11" width="18" height="22" rx="4" class="node"/>
+      <path d="M14 0 H34 M34 0 L58 -13 M34 0 L58 13" class="wire"/><path d="M34 0 L58 13" class="wire dash"/>
+      <rect x="58" y="-22" width="14" height="16" rx="3.5" class="node"/><circle cx="64" cy="14" r="5" class="node"/>
+      ${dot('M14 0 H34 L58 -13', 2.2)}${dot('M14 0 H34 L58 13', 2.2, 1.1)}</g>`,
+    // case study: a page being read, line by line
+    (x, y) => `<g transform="translate(${x} ${y}) scale(.85)"><rect x="6" y="-20" width="46" height="40" rx="5" class="node"/>
+      <path d="M14 -10 H44 M14 0 H38 M14 10 H44" class="wire"/>
+      <circle cx="60" cy="-16" r="4" fill="${ROSE}" class="blink"/>
+      ${dot('M14 -10 H44 M14 0 H38 M14 10 H44', 3.6)}</g>`,
+  ];
+
+  const feats = C.features.map((f, i) => {
+    const tall = !!f.chips, x = 520, w = 432;
+    const y = 70 + i * 82, h = tall ? 104 : 72;
+    let cx = x + 84;
+    const chips = (f.chips || []).map(t => {
+      const cw = Math.ceil(t.length * 6.6 + 20);
+      const out = `<rect x="${cx}" y="${y + 66}" width="${cw}" height="24" rx="12" class="chip"/><text x="${cx + cw / 2}" y="${y + 82}" text-anchor="middle" class="mono cpt">${esc(t)}</text>`;
+      cx += cw + 6;
+      return out;
+    }).join('');
+    return `<g><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" class="tile"/>
+      ${icons[i % icons.length](x + 13, y + 36)}
+      <text x="${x + 84}" y="${y + 28}" class="mono tl">${esc(f.tag)}</text>
+      <text x="${x + 84}" y="${y + 52}" class="sans ft">${esc(clip(f.title, 40))}</text>
+      <circle cx="${x + w - 18}" cy="${y + 20}" r="3.5" fill="${ROSE}" class="blink" style="animation-delay:${(i * 0.45).toFixed(2)}s"/>
+      ${chips}</g>`;
+  }).join('');
+
+  const badgeW = C.badge ? Math.ceil(C.badge.length * 6.9 + 24) : 0;
+  const badge = C.badge
+    ? `<rect x="${472 - badgeW}" y="34" width="${badgeW}" height="26" rx="13" class="badge"/><text x="${472 - badgeW / 2}" y="51" text-anchor="middle" class="mono bdt">${esc(C.badge)}</text>`
+    : '';
+  const tagline = wrap(C.tagline || '', 58, 3);
+  const ctaW = Math.ceil((C.cta || '').length * 8.6 + 58);
+  const extras = (C.extras || []).slice(0, 2).map((t, k) =>
+    `<circle cx="${48 + ctaW + 22}" cy="${403 + k * 17}" r="2.5" fill="${ROSE}"/><text x="${48 + ctaW + 32}" y="${407 + k * 17}" class="mono ex">${esc(clip(t, 24))}</text>`).join('');
+
+  const body = `
+    <text x="48" y="52" class="mono lab">${esc(C.eyebrow || 'COURSE')}</text>
+    ${badge}
+    <text x="48" y="108" class="serif ctitle">${esc(clip(C.title, 30))}</text>
+    <text x="48" y="140" class="serif csub">${esc(clip(C.titleSub || '', 44))}</text>
+    ${tagline.map((l, k) => `<text x="48" y="${170 + k * 20}" class="sans ctag">${esc(l)}</text>`).join('')}
+    ${pills}
+    <rect x="48" y="392" width="${ctaW}" height="38" rx="19" class="cta"/>
+    <text x="${48 + ctaW / 2 - 8}" y="416" text-anchor="middle" class="mono ctat">${esc(C.cta || 'VIEW COURSE')}</text>
+    <text x="${48 + ctaW - 26}" y="416" class="mono ctat arrow">→</text>
+    ${extras}
+    <text x="520" y="52" class="mono lab">WHAT YOU’LL LEARN</text>
+    ${feats}`;
+  const css = `
+    .lab { font-size: 11px; letter-spacing: .24em; fill: ${ROSE_DIM}; }
+    .badge { fill: #2a1019; stroke: ${ROSE}; stroke-opacity: .6; } .bdt { font-size: 10.5px; letter-spacing: .08em; fill: ${ROSE}; font-weight: 700; }
+    .ctitle { font-size: 31px; fill: ${TEXT}; } .csub { font-size: 21px; font-style: italic; fill: ${ROSE_SOFT}; }
+    .ctag { font-size: 14px; fill: ${MUTED}; }
+    .pill { fill: #2a1019; stroke: #6b2a44; } .pt { font-size: 12px; fill: #e9b8cd; }
+    .pon { fill: ${ROSE}; stroke: ${ROSE}; } .pton { fill: #14070d; font-weight: 700; }
+    .tile { fill: #1d0a13; stroke: #4a1c30; }
+    .tl { font-size: 10px; letter-spacing: .2em; fill: ${ROSE_DIM}; }
+    .ft { font-size: 16px; fill: ${TEXT}; }
+    .chip { fill: #2a1019; stroke: #6b2a44; } .cpt { font-size: 10.5px; fill: #e9b8cd; }
+    .wire { fill: none; stroke: ${ROSE}; stroke-opacity: .55; stroke-width: 1.3; stroke-linecap: round; } .wire.dash { stroke-dasharray: 3 4; }
+    .node { fill: #2a1019; stroke: ${ROSE}; stroke-opacity: .8; stroke-width: 1.3; }
+    .cta { fill: ${ROSE}; } .ctat { font-size: 12px; letter-spacing: .12em; font-weight: 700; fill: #14070d; }
+    .arrow { animation: nudge 1.6s ease-in-out infinite; }
+    .ex { font-size: 10.5px; fill: ${MUTED}; }
+    @keyframes nudge { 0%,100% { transform: translateX(0); } 50% { transform: translateX(4px); } }`;
+  save('course', shell(W, H, `${C.title} ${C.titleSub || ''}`.trim(), body, { extraCss: css, gridX: 0.5 }));
+  return true;
+}
+
 // ---------- social buttons + cards ----------
 const iconIn = (x, y, s = 1) => `<g transform="translate(${x} ${y}) scale(${s})"><rect width="22" height="22" rx="4" fill="#fff"/><text x="11" y="17" text-anchor="middle" class="sans" font-size="15" font-weight="800" fill="#0d0508">in</text></g>`;
 const iconMail = (x, y, s = 1) => `<g transform="translate(${x} ${y}) scale(${s})"><rect x="1" y="3" width="22" height="16" rx="2.5" fill="none" stroke="#fff" stroke-width="2"/><path d="M2 5 L12 13 L22 5" fill="none" stroke="#fff" stroke-width="2"/></g>`;
@@ -414,7 +515,11 @@ ${img('expertise', 'Expertise')}
 ${img('sec-work', 'Selected work')}
 
 ${block}
+${HAS_COURSE ? `
+${img('sec-course', 'Course')}
 
+<a href="${P.course.url}">${img('course', `${P.course.title} ${P.course.titleSub || ''}`.trim())}</a>
+` : ''}
 ${img('sec-connect', 'Connect')}
 
 <a href="${P.linkedin}">${img('card-linkedin', 'LinkedIn', 'width="49%"')}</a>
@@ -429,7 +534,9 @@ hero();
 header('sec-about', '01', 'ABOUT', [["Hello, I'm ", false], [P.first, true], ['.', false]], 'WHO I AM');
 header('sec-expertise', '02', 'EXPERTISE', [['What I ', false], ['lead & build', true], ['.', false]], 'STRATEGY · AI CRAFT · INDUSTRIES');
 header('sec-work', '03', 'SELECTED WORK', [['Things I’ve ', false], ['built', true], ['.', false]], 'LATEST REPOSITORIES · AUTO-UPDATED');
-header('sec-connect', '04', 'CONNECT', [['Let’s ', false], ['talk', true], ['.', false]], 'FIND ME ONLINE');
+const HAS_COURSE = course();
+if (HAS_COURSE) header('sec-course', '04', 'COURSE', [['Learn ', false], ['with me', true], ['.', false]], 'MASTERCLASS · ON TOPMATE');
+header('sec-connect', HAS_COURSE ? '05' : '04', 'CONNECT', [['Let’s ', false], ['talk', true], ['.', false]], 'FIND ME ONLINE');
 about();
 expertise();
 button('btn-linkedin', iconIn, 'LINKEDIN', P.linkedinHandle);

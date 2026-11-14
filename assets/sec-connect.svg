@@ -41,7 +41,7 @@
     <rect x="0.5" y="0.5" width="999" height="95" rx="18" fill="none" stroke="#5a2339"/>
     <rect x="1" y="1" width="998" height="94" rx="18" fill="none" stroke="url(#edge)" stroke-width="2" pathLength="100" stroke-dasharray="22 78" class="run"/>
     
-    <text x="48" y="30" class="mono sn"><tspan class="snn">04</tspan> CONNECT</text>
+    <text x="48" y="30" class="mono sn"><tspan class="snn">05</tspan> CONNECT</text>
     <text x="952" y="30" text-anchor="end" class="mono sr">FIND ME ONLINE</text>
     <text x="48" y="70" class="serif ht">Let’s <tspan class="hi">talk</tspan>.</text>
     <rect x="48" y="83" width="904" height="1" fill="url(#fade)"/>

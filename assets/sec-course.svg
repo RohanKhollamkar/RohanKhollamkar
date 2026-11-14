@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="96" viewBox="0 0 1000 96" role="img" aria-label="Learn with me.">
+  <defs>
+    <radialGradient id="glow" cx="0.9" cy="0.2" r="0.62">
+      <stop offset="0" stop-color="#6e1b3d" stop-opacity="0.9"/><stop offset="0.55" stop-color="#3a0f24" stop-opacity="0.45"/><stop offset="1" stop-color="#14070d" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f0a6c4" stop-opacity="0"/><stop offset="0.5" stop-color="#f0a6c4"/><stop offset="1" stop-color="#f0a6c4" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f0a6c4" stop-opacity="0.9"/><stop offset="1" stop-color="#f0a6c4" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse">
+      <path d="M22 0H0V22" fill="none" stroke="#f0a6c4" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+    <clipPath id="clip"><rect width="1000" height="96" rx="18"/></clipPath>
+  </defs>
+  <style>
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; } .serif { font-family: Georgia, 'Times New Roman', 'Liberation Serif', serif; } .sans { font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
+    .card { animation: rise .9s ease-out both; }
+    .run { animation: run 6s linear infinite; }
+    .blink { animation: blink 2.4s ease-in-out infinite; }
+    .cursor { animation: cur 1s steps(1) infinite; }
+    .type { animation: type 1s steps(26, end) both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes run { from { stroke-dashoffset: 100; } to { stroke-dashoffset: -100; } }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+    @keyframes cur { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+    @keyframes type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+    @keyframes ring { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(2); opacity: 0; } }
+    @keyframes scan { from { transform: translateX(-80px); } to { transform: translateX(460px); } }
+    @keyframes bars { 0%,100% { transform: scaleY(.45); } 50% { transform: scaleY(1); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+    .sn { font-size: 11px; letter-spacing: .22em; fill: #d68aae; } .snn { fill: #f0a6c4; font-weight: 700; }
+    .sr { font-size: 10px; letter-spacing: .22em; fill: #8d6f7c; }
+    .ht { font-size: 38px; fill: #f7eef2; } .hi { font-style: italic; fill: #e8a8c4; }
+  </style>
+  <g class="card" clip-path="url(#clip)">
+    <rect width="1000" height="96" rx="18" fill="#14070d"/>
+    <rect width="1000" height="96" fill="url(#glow)"/>
+    
+    <rect x="0.5" y="0.5" width="999" height="95" rx="18" fill="none" stroke="#5a2339"/>
+    <rect x="1" y="1" width="998" height="94" rx="18" fill="none" stroke="url(#edge)" stroke-width="2" pathLength="100" stroke-dasharray="22 78" class="run"/>
+    
+    <text x="48" y="30" class="mono sn"><tspan class="snn">04</tspan> COURSE</text>
+    <text x="952" y="30" text-anchor="end" class="mono sr">MASTERCLASS · ON TOPMATE</text>
+    <text x="48" y="70" class="serif ht">Learn <tspan class="hi">with me</tspan>.</text>
+    <rect x="48" y="83" width="904" height="1" fill="url(#fade)"/>
+    <circle cx="48" cy="83.5" r="3" fill="#f0a6c4"><animateMotion dur="7s" repeatCount="indefinite" path="M0 0 H880"/></circle>
+  </g>
+</svg>

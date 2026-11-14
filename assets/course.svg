@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="456" viewBox="0 0 1000 456" role="img" aria-label="APIs &amp; Event-Driven Systems for AI Builders &amp; Business Leaders">
+  <defs>
+    <radialGradient id="glow" cx="0.82" cy="0.28" r="0.62">
+      <stop offset="0" stop-color="#6e1b3d" stop-opacity="0.9"/><stop offset="0.55" stop-color="#3a0f24" stop-opacity="0.45"/><stop offset="1" stop-color="#14070d" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f0a6c4" stop-opacity="0"/><stop offset="0.5" stop-color="#f0a6c4"/><stop offset="1" stop-color="#f0a6c4" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f0a6c4" stop-opacity="0.9"/><stop offset="1" stop-color="#f0a6c4" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse">
+      <path d="M22 0H0V22" fill="none" stroke="#f0a6c4" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+    <clipPath id="clip"><rect width="1000" height="456" rx="18"/></clipPath>
+  </defs>
+  <style>
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; } .serif { font-family: Georgia, 'Times New Roman', 'Liberation Serif', serif; } .sans { font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
+    .card { animation: rise .9s ease-out both; }
+    .run { animation: run 6s linear infinite; }
+    .blink { animation: blink 2.4s ease-in-out infinite; }
+    .cursor { animation: cur 1s steps(1) infinite; }
+    .type { animation: type 1s steps(26, end) both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes run { from { stroke-dashoffset: 100; } to { stroke-dashoffset: -100; } }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+    @keyframes cur { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+    @keyframes type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+    @keyframes ring { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(2); opacity: 0; } }
+    @keyframes scan { from { transform: translateX(-80px); } to { transform: translateX(460px); } }
+    @keyframes bars { 0%,100% { transform: scaleY(.45); } 50% { transform: scaleY(1); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+    .lab { font-size: 11px; letter-spacing: .24em; fill: #d68aae; }
+    .badge { fill: #2a1019; stroke: #f0a6c4; stroke-opacity: .6; } .bdt { font-size: 10.5px; letter-spacing: .08em; fill: #f0a6c4; font-weight: 700; }
+    .ctitle { font-size: 31px; fill: #f7eef2; } .csub { font-size: 21px; font-style: italic; fill: #e8a8c4; }
+    .ctag { font-size: 14px; fill: #b7a0ab; }
+    .pill { fill: #2a1019; stroke: #6b2a44; } .pt { font-size: 12px; fill: #e9b8cd; }
+    .pon { fill: #f0a6c4; stroke: #f0a6c4; } .pton { fill: #14070d; font-weight: 700; }
+    .tile { fill: #1d0a13; stroke: #4a1c30; }
+    .tl { font-size: 10px; letter-spacing: .2em; fill: #d68aae; }
+    .ft { font-size: 16px; fill: #f7eef2; }
+    .chip { fill: #2a1019; stroke: #6b2a44; } .cpt { font-size: 10.5px; fill: #e9b8cd; }
+    .wire { fill: none; stroke: #f0a6c4; stroke-opacity: .55; stroke-width: 1.3; stroke-linecap: round; } .wire.dash { stroke-dasharray: 3 4; }
+    .node { fill: #2a1019; stroke: #f0a6c4; stroke-opacity: .8; stroke-width: 1.3; }
+    .cta { fill: #f0a6c4; } .ctat { font-size: 12px; letter-spacing: .12em; font-weight: 700; fill: #14070d; }
+    .arrow { animation: nudge 1.6s ease-in-out infinite; }
+    .ex { font-size: 10.5px; fill: #b7a0ab; }
+    @keyframes nudge { 0%,100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
+  </style>
+  <g class="card" clip-path="url(#clip)">
+    <rect width="1000" height="456" rx="18" fill="#14070d"/>
+    <rect width="1000" height="456" fill="url(#glow)"/>
+    <rect x="500" width="500" height="456" fill="url(#grid)"/>
+    <rect x="0.5" y="0.5" width="999" height="455" rx="18" fill="none" stroke="#5a2339"/>
+    <rect x="1" y="1" width="998" height="454" rx="18" fill="none" stroke="url(#edge)" stroke-width="2" pathLength="100" stroke-dasharray="22 78" class="run"/>
+    
+    <text x="48" y="52" class="mono lab">COURSE · MASTERCLASS SERIES</text>
+    <rect x="316" y="34" width="156" height="26" rx="13" class="badge"/><text x="394" y="51" text-anchor="middle" class="mono bdt">★ 5.0 · BEST SELLER</text>
+    <text x="48" y="108" class="serif ctitle">APIs &amp; Event-Driven Systems</text>
+    <text x="48" y="140" class="serif csub">for AI Builders &amp; Business Leaders</text>
+    <text x="48" y="170" class="sans ctag">Master production-grade APIs and design event-driven</text><text x="48" y="190" class="sans ctag">architectures, through real integration case studies.</text>
+    <rect x="48" y="242" width="286" height="30" rx="15" class="pill pon"/><text x="191" y="261" text-anchor="middle" class="mono pt pton">AI Builders · vibe coders / low-code</text><rect x="342" y="242" width="142" height="30" rx="15" class="pill"/><text x="413" y="261" text-anchor="middle" class="mono pt">Business Leaders</text><rect x="48" y="280" width="214" height="30" rx="15" class="pill"/><text x="155" y="299" text-anchor="middle" class="mono pt">Product &amp; Program Managers</text><rect x="270" y="280" width="170" height="30" rx="15" class="pill"/><text x="355" y="299" text-anchor="middle" class="mono pt">Engineering Managers</text><rect x="48" y="318" width="149" height="30" rx="15" class="pill"/><text x="122.5" y="337" text-anchor="middle" class="mono pt">Junior Developers</text><rect x="205" y="318" width="149" height="30" rx="15" class="pill"/><text x="279.5" y="337" text-anchor="middle" class="mono pt">Business Analysts</text>
+    <rect x="48" y="392" width="248" height="38" rx="19" class="cta"/>
+    <text x="164" y="416" text-anchor="middle" class="mono ctat">VIEW COURSE ON TOPMATE</text>
+    <text x="270" y="416" class="mono ctat arrow">→</text>
+    <circle cx="318" cy="403" r="2.5" fill="#f0a6c4"/><text x="328" y="407" class="mono ex">70+ interview questions</text><circle cx="318" cy="420" r="2.5" fill="#f0a6c4"/><text x="328" y="424" class="mono ex">10+ frameworks</text>
+    <text x="520" y="52" class="mono lab">WHAT YOU’LL LEARN</text>
+    <g><rect x="520" y="70" width="432" height="72" rx="12" class="tile"/>
+      <g transform="translate(533 106) scale(.85)"><path d="M0 0 H26 M26 0 L58 -16 M26 0 H58 M26 0 L58 16" class="wire"/>
+      <circle r="5" class="node"/><circle cx="26" r="3.5" fill="#f0a6c4"/>
+      <circle cx="62" cy="-16" r="4" class="node"/><circle cx="62" r="4" class="node"/><circle cx="62" cy="16" r="4" class="node"/>
+      <circle r="2.6" fill="#fff"><animateMotion dur="2.4s" begin="0s" repeatCount="indefinite" path="M0 0 H26 L58 -16"/></circle><circle r="2.6" fill="#fff"><animateMotion dur="2.4s" begin="0.8s" repeatCount="indefinite" path="M0 0 H26 H58"/></circle><circle r="2.6" fill="#fff"><animateMotion dur="2.4s" begin="1.6s" repeatCount="indefinite" path="M0 0 H26 L58 16"/></circle></g>
+      <text x="604" y="98" class="mono tl">ASYNC</text>
+      <text x="604" y="122" class="sans ft">Event-Driven Architectures</text>
+      <circle cx="934" cy="90" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:0.00s"/>
+      </g><g><rect x="520" y="152" width="432" height="72" rx="12" class="tile"/>
+      <g transform="translate(533 188) scale(.85)"><rect x="-8" y="-11" width="18" height="22" rx="4" class="node"/><rect x="52" y="-11" width="18" height="22" rx="4" class="node"/>
+      <path d="M14 -5 H48 M48 5 H14" class="wire"/>
+      <circle r="2.6" fill="#fff"><animateMotion dur="1.6s" begin="0s" repeatCount="indefinite" path="M14 -5 H48"/></circle><circle r="2.6" fill="#fff"><animateMotion dur="1.6s" begin="0.8s" repeatCount="indefinite" path="M48 5 H14"/></circle></g>
+      <text x="604" y="180" class="mono tl">SYNC</text>
+      <text x="604" y="204" class="sans ft">Enterprise API Integration Patterns</text>
+      <circle cx="934" cy="172" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:0.45s"/>
+      </g><g><rect x="520" y="234" width="432" height="72" rx="12" class="tile"/>
+      <g transform="translate(533 270) scale(.85)"><rect x="-8" y="-11" width="18" height="22" rx="4" class="node"/>
+      <path d="M14 0 H34 M34 0 L58 -13 M34 0 L58 13" class="wire"/><path d="M34 0 L58 13" class="wire dash"/>
+      <rect x="58" y="-22" width="14" height="16" rx="3.5" class="node"/><circle cx="64" cy="14" r="5" class="node"/>
+      <circle r="2.6" fill="#fff"><animateMotion dur="2.2s" begin="0s" repeatCount="indefinite" path="M14 0 H34 L58 -13"/></circle><circle r="2.6" fill="#fff"><animateMotion dur="2.2s" begin="1.1s" repeatCount="indefinite" path="M14 0 H34 L58 13"/></circle></g>
+      <text x="604" y="262" class="mono tl">SYNC + ASYNC</text>
+      <text x="604" y="286" class="sans ft">Hybrid Architectures</text>
+      <circle cx="934" cy="254" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:0.90s"/>
+      </g><g><rect x="520" y="316" width="432" height="104" rx="12" class="tile"/>
+      <g transform="translate(533 352) scale(.85)"><rect x="6" y="-20" width="46" height="40" rx="5" class="node"/>
+      <path d="M14 -10 H44 M14 0 H38 M14 10 H44" class="wire"/>
+      <circle cx="60" cy="-16" r="4" fill="#f0a6c4" class="blink"/>
+      <circle r="2.6" fill="#fff"><animateMotion dur="3.6s" begin="0s" repeatCount="indefinite" path="M14 -10 H44 M14 0 H38 M14 10 H44"/></circle></g>
+      <text x="604" y="344" class="mono tl">APPLIED</text>
+      <text x="604" y="368" class="sans ft">End-to-End Case Studies</text>
+      <circle cx="934" cy="336" r="3.5" fill="#f0a6c4" class="blink" style="animation-delay:1.35s"/>
+      <rect x="604" y="382" width="67" height="24" rx="12" class="chip"/><text x="637.5" y="398" text-anchor="middle" class="mono cpt">Banking</text><rect x="677" y="382" width="126" height="24" rx="12" class="chip"/><text x="740" y="398" text-anchor="middle" class="mono cpt">Payment Gateways</text><rect x="809" y="382" width="113" height="24" rx="12" class="chip"/><text x="865.5" y="398" text-anchor="middle" class="mono cpt">AI Integration</text></g>
+  </g>
+</svg>
