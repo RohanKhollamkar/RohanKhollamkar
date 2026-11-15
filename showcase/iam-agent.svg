@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="461" viewBox="0 0 1000 461" role="img" aria-label="IAM Agent: Nobody knows who an AI agent is, what it's allowed to do, or who's responsible when it does something wrong. This is arguably the single most urgent unsolved infrastructure problem in AI right now. When Agent A invokes Agent B, which calls a tool, which triggers a payment — every hop must be cryptographically provable back to an accountable human.">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="461" viewBox="0 0 1000 461" role="img" aria-label="IAM Agent: A sentry between AI agents and MCP servers: verifies who the agent is, what it may do and on whose behalf, then logs each decision for audit, over STDIO or HTTP.">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#140c11"/><stop offset="1" stop-color="#26121c"/>
@@ -43,9 +43,9 @@
   <g class="in">
     <text x="44" y="60" class="mono" font-size="12" letter-spacing="1.5" fill="#f0a6c4">02 · AGENT-IDENTITY-PROTOCOL · AGENTIC-AI · 2026</text>
     <text x="44" y="114" class="serif" font-size="44" fill="#f7eef2">IAM Agent</text>
-    <text x="44" y="150" class="sans" font-size="15" fill="#b7a0ab">Nobody knows who an AI agent is, what it's allowed to</text>
-    <text x="44" y="173" class="sans" font-size="15" fill="#b7a0ab">do, or who's responsible when it does something wrong.</text>
-    <text x="44" y="196" class="sans" font-size="15" fill="#b7a0ab">This is arguably the single most urgent unsolved…</text>
+    <text x="44" y="150" class="sans" font-size="15" fill="#b7a0ab">A sentry between AI agents and MCP servers: verifies</text>
+    <text x="44" y="173" class="sans" font-size="15" fill="#b7a0ab">who the agent is, what it may do and on whose behalf,</text>
+    <text x="44" y="196" class="sans" font-size="15" fill="#b7a0ab">then logs each decision for audit, over STDIO or HTTP.</text>
     <text x="44" y="231" class="mono" font-size="12" fill="#f7eef2"><tspan fill="#f0a6c4" letter-spacing="1.5">BUILT &gt;</tspan> python · since jul 2026<tspan class="cursor" fill="#f0a6c4"> ▍</tspan></text>
   </g>
   <g class="in" style="animation-delay:.2s">
