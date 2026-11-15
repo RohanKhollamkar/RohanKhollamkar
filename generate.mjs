@@ -136,7 +136,7 @@ function model(r, langs, i) {
   ];
   const autoTags = [...new Set([...langNames.slice(0, 2), ...topics.slice(0, 3)])];
   const visual = o.visual in DRAW ? o.visual : pickVisual(r); // 'storyboard' and 'sentry' are config-only, never auto-picked
-  const tags = (o.tags?.length ? o.tags : autoTags.length ? autoTags : [r.language || 'Code']).slice(0, 5);
+  const tags = (o.tags?.length ? o.tags : autoTags.length ? autoTags : [r.language || 'Code']).slice(0, 6);
 
   return {
     name: r.name,
@@ -154,6 +154,9 @@ function model(r, langs, i) {
     chip: o.chip?.length ? o.chip : ['Q · what does it say?', 'A · answer, with source'],
     states: o.states?.length ? o.states : ['running', 'success', 'failed'],
     cost: o.cost,
+    features: o.features?.length ? o.features.slice(0, 3) : null, // [{ title, text }] shown instead of the three numbers
+    compare: o.compare?.length ? o.compare.slice(0, 2) : null,   // [[label, text], [label, text]] without / with
+    builtLabel: o.builtLabel || 'BUILT',
     thresholds: o.thresholds,
     models: o.models,
   };
@@ -395,14 +398,24 @@ function render(m) {
     px += pw + 8;
   }
   const pillsTop = big ? Hc - 30 - rows.length * 24 - (rows.length - 1) * 8 : 306;
-  const statY = pillsTop - 40, ruleY = statY - 34;
+  const statY = pillsTop - (m.features ? 60 : 40), ruleY = statY - (m.features ? 24 : 34);
   const pills = rows.map((row, i) => row.map(({ s, pw, x }) => {
     const y = pillsTop + i * 32;
     return `<rect x="${x}" y="${y}" width="${pw}" height="24" rx="12" fill="${ROSE}" fill-opacity=".08" stroke="${ROSE}" stroke-opacity=".4"/><text x="${x + pw / 2}" y="${y + 16}" class="mono" font-size="11" fill="${ROSE}" text-anchor="middle">${esc(s)}</text>`;
   }).join('')).join('');
 
+  // "without / with" strip, only where the taller card leaves room for it
+  const compare = big && m.compare && builtY + 41 < ruleY - 8 ? m.compare.map(([label, text], i) => {
+    const y = builtY + 25 + i * 16, on = i === m.compare.length - 1;
+    return `<text x="${L}" y="${y}" class="mono" font-size="9.5" letter-spacing=".8" font-weight="${on ? 700 : 400}" fill="${on ? ROSE : MUTED}">${esc(clip(label, 16).toUpperCase())}</text><text x="${L + 118}" y="${y}" class="mono" font-size="9.5" fill="${on ? ROSE : MUTED}">→</text><text x="${L + 134}" y="${y}" class="mono" font-size="9.5" fill="${on ? TEXT : MUTED}">${esc(clip(text, 52))}</text>`;
+  }).join('') : '';
+
   const statStep = big ? 148 : 178;
-  const stats = m.stats.map((s, k) => {
+  const stats = m.features ? m.features.map((ft, k) => {
+    const x = L + k * statStep;
+    return `<text x="${x}" y="${statY}" class="serif" font-size="17" fill="${ROSE}">${esc(clip(ft.title, 17))}</text>` +
+      wrap(ft.text || '', big ? 25 : 30, 3).map((l, i) => `<text x="${x}" y="${statY + 17 + i * 13}" class="sans" font-size="10.5" fill="${MUTED}">${esc(l)}</text>`).join('');
+  }).join('') : m.stats.map((s, k) => {
     const v = clip(s.value, 9);
     return `<text x="${L + k * statStep}" y="${statY}" class="serif" font-size="${v.length > 5 ? 26 : 32}" fill="${ROSE}">${esc(v)}</text><text x="${L + k * statStep}" y="${statY + 20}" class="mono" font-size="10" letter-spacing="1" fill="${MUTED}">${esc(clip(s.label, 22).toUpperCase())}</text>`;
   }).join('');
@@ -453,9 +466,10 @@ function render(m) {
     <text x="${L}" y="60" class="mono" font-size="12" letter-spacing="${big ? 1.5 : 2.5}" fill="${ROSE}">${esc(clip(m.eyebrow, 52))}</text>
     <text x="${L}" y="${titleSize > 40 ? 114 : 110}" class="serif" font-size="${titleSize}" fill="${TEXT}">${esc(title)}</text>
     ${tagline.map((l, k) => `<text x="${L}" y="${150 + k * 23}" class="sans" font-size="15" fill="${MUTED}">${esc(l)}</text>`).join('\n    ')}
-    <text x="${L}" y="${builtY}" class="mono" font-size="12" fill="${TEXT}"><tspan fill="${ROSE}" letter-spacing="1.5">BUILT &gt;</tspan> ${esc(clip(m.built, big ? 46 : 58))}<tspan class="cursor" fill="${ROSE}"> ▍</tspan></text>
+    <text x="${L}" y="${builtY}" class="mono" font-size="12" fill="${TEXT}"><tspan fill="${ROSE}" letter-spacing="1.5">${esc(clip(m.builtLabel, 8).toUpperCase())} &gt;</tspan> ${esc(clip(m.built, (big ? 54 : 66) - Math.min(m.builtLabel.length, 8)))}<tspan class="cursor" fill="${ROSE}"> ▍</tspan></text>
   </g>
   <g class="in" style="animation-delay:.2s">
+    ${compare}
     <line x1="${L}" y1="${ruleY}" x2="${RIGHT}" y2="${ruleY}" stroke="${ROSE}" stroke-opacity=".18"/>
     ${stats}
     ${pills}
