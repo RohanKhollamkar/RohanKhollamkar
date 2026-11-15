@@ -135,7 +135,7 @@ function model(r, langs, i) {
     { value: monthYear(r.pushed_at), label: 'last push' },
   ];
   const autoTags = [...new Set([...langNames.slice(0, 2), ...topics.slice(0, 3)])];
-  const visual = o.visual in DRAW ? o.visual : pickVisual(r); // 'storyboard' is config-only, never auto-picked
+  const visual = o.visual in DRAW ? o.visual : pickVisual(r); // 'storyboard' and 'sentry' are config-only, never auto-picked
   const tags = (o.tags?.length ? o.tags : autoTags.length ? autoTags : [r.language || 'Code']).slice(0, 5);
 
   return {
@@ -304,7 +304,68 @@ function visStoryboard(m) {
       ${saved > 0 ? `<text x="318" y="246" class="mono" font-size="9" fill="${OK}" text-anchor="end">saved ${money(saved)} · ${pct}% under estimate${show(done + 1.2)}</text>` : ''}`;
 }
 
-const DRAW = { network: visNetwork, documents: visDocuments, flow: visFlow, pipeline: visPipeline, storyboard: visStoryboard };
+// sentry: agent (SPIFFE identity + JWT) -> MCP request -> five IAM-Agent Sentry checks -> ALLOW + audit -> MCP server.
+// The loop runs twice: once over STDIO (local wrapper), once over HTTP (production gateway); the checks are the same.
+function visSentry() {
+  const P1 = 8, T = P1 * 2;                    // seconds per pass, per loop
+  const f = t => (t / T).toFixed(4);
+  const anim = wins => {                        // visible only inside the given [from, to] windows
+    const vals = ['0'], keys = ['0'];
+    for (const [a, b] of wins) { vals.push('0', '1', '1', '0'); keys.push(f(a), f(a + 0.15), f(b), f(b + 0.15)); }
+    vals.push('0'); keys.push('1');
+    return `<animate attributeName="opacity" dur="${T}s" repeatCount="indefinite" values="${vals.join(';')}" keyTimes="${keys.join(';')}"/>`;
+  };
+  const both = at => anim([[at, P1 - 0.6], [at + P1, T - 0.6]]);   // in both passes
+  const pass = (n, at) => anim([[at + n * P1, (n + 1) * P1 - 0.6]]); // only in pass n (0 = STDIO, 1 = HTTP)
+  const OK = '#8fd6a8', AMBER = '#ffc857';       // amber = everything about the agent's identity
+  const box = (x, y, w, h, strong) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="7" fill="${strong ? '#2a1622' : PANEL_BG}" stroke="${ROSE}" stroke-opacity="${strong ? 1 : 0.75}" stroke-width="${strong ? 1.4 : 1}"/>`;
+  const chip = (x, y, w, t, c) => `<rect x="${x}" y="${y}" width="${w}" height="14" rx="7" fill="${c}" fill-opacity=".14" stroke="${c}" stroke-opacity=".7"/><text x="${x + w / 2}" y="${y + 10.2}" class="mono" font-size="8" font-weight="700" fill="${c}" text-anchor="middle">${t}</text>`;
+  const down = (x, y1, y2) => `<path class="dash" d="M${x} ${y1} V${y2 - 2}" fill="none" stroke="${ROSE}" stroke-opacity=".8" stroke-dasharray="3 4"/><path d="M${x - 3} ${y2 - 4.5} L${x} ${y2} L${x + 3} ${y2 - 4.5}" fill="none" stroke="${ROSE}" stroke-opacity=".8" stroke-linecap="round" stroke-linejoin="round"/>`;
+
+  const checks = [
+    ['Transport Interceptor', null],
+    ['Identity Verifier', 'SPIFFE SVID'],
+    ['Permission Engine', 'tool scope'],
+    ['Delegation Tracker', 'on behalf of'],
+    ['Audit Logger', 'logged'],
+  ];
+  const at = k => 1 + k * 0.8;                  // when check k passes, within a pass
+  const rows = checks.map(([name, detail], k) => {
+    const y = 104 + k * 15.5, mid = y - 3;
+    const right = k === 0
+      ? `<text x="286" y="${y}" class="mono" font-size="8" font-weight="700" fill="${TEXT}" text-anchor="end">STDIO${pass(0, at(k))}</text><text x="286" y="${y}" class="mono" font-size="8" font-weight="700" fill="${TEXT}" text-anchor="end">HTTP · mTLS${pass(1, at(k))}</text>`
+      : `<text x="286" y="${y}" class="mono" font-size="8" ${k === 1 ? `font-weight="700" fill="${AMBER}"` : `fill="${MUTED}"`} text-anchor="end">${detail}${both(at(k))}</text>`;
+    return `<rect x="26" y="${y - 9.5}" width="284" height="13" rx="3" fill="${PANEL_BG}" stroke="${ROSE_DIM}" stroke-opacity=".45"/>
+      <rect x="26" y="${y - 9.5}" width="284" height="13" rx="3" fill="${ROSE}" fill-opacity=".16" stroke="${ROSE}" stroke-opacity=".8">${both(at(k))}</rect>
+      <text x="33" y="${y}" class="mono" font-size="8.5" fill="${MUTED}">${k + 1}</text>
+      <text x="46" y="${y}" class="mono" font-size="8.5" fill="${TEXT}">${name}</text>
+      ${right}
+      <circle cx="299" cy="${mid}" r="3.2" fill="none" stroke="${ROSE_DIM}" stroke-opacity=".7"/>
+      <g>${both(at(k))}<circle cx="299" cy="${mid}" r="3.2" fill="${OK}"/><path d="M297.3 ${mid} L298.6 ${mid + 1.4} L300.9 ${mid - 1.5}" fill="none" stroke="#14070d" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></g>`;
+  }).join('');
+
+  const transport = (y, n, tag, text) => `<text x="18" y="${y}" class="mono" font-size="8" font-weight="700" fill="${ROSE_DIM}">${tag}</text><text x="52" y="${y}" class="mono" font-size="8" fill="${MUTED}" fill-opacity=".75">${text}</text>
+      <g>${pass(n, 0.2)}<rect x="12" y="${y - 9}" width="312" height="12.5" rx="3" fill="${ROSE}" fill-opacity=".12"/><text x="18" y="${y}" class="mono" font-size="8" font-weight="700" fill="${ROSE}">${tag}</text><text x="52" y="${y}" class="mono" font-size="8" fill="${TEXT}">${text}</text></g>`;
+
+  return `<g class="blink">${box(18, 38, 300, 22, false)}</g>
+      <text x="27" y="52.5" class="mono" font-size="9.5" fill="${TEXT}">AI AGENT</text>${chip(196, 42, 68, 'SPIFFE ID', AMBER)}${chip(270, 42, 40, 'JWT', ROSE)}
+      ${down(168, 60, 76)}
+      <text x="178" y="71" class="mono" font-size="8" fill="${MUTED}">MCP request</text>
+      <rect x="18" y="76" width="300" height="100" rx="8" fill="#2a1622" fill-opacity=".55" stroke="${ROSE}" stroke-width="1.4"/>
+      <text x="27" y="89" class="mono" font-size="8.5" letter-spacing="1.6" font-weight="700" fill="${ROSE}">IAM-AGENT SENTRY</text>
+      <text x="310" y="89" class="mono" font-size="7" letter-spacing=".4" fill="${MUTED}" text-anchor="end">SAME CHECKS · ANY TRANSPORT</text>
+      ${rows}
+      ${down(168, 176, 196)}
+      <g>${both(5)}${chip(178, 179, 84, 'ALLOW + audit', OK)}</g>
+      ${box(18, 196, 300, 22, false)}
+      <rect x="18" y="196" width="300" height="22" rx="7" fill="${ROSE}" fill-opacity=".2" stroke="${ROSE}">${both(5.6)}</rect>
+      <text x="27" y="210.5" class="mono" font-size="9.5" fill="${TEXT}">MCP SERVER</text>
+      <text x="310" y="210.5" class="mono" font-size="8" fill="${MUTED}" text-anchor="end">tools / resources</text>
+      ${transport(236, 0, 'STDIO', 'local · wraps the MCP server process')}
+      ${transport(250, 1, 'HTTP', 'production · reverse proxy / gateway · mTLS')}`;
+}
+
+const DRAW = { network: visNetwork, documents: visDocuments, flow: visFlow, pipeline: visPipeline, storyboard: visStoryboard, sentry: visSentry };
 
 // ---------- card ----------
 function render(m) {
