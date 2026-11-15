@@ -13,6 +13,7 @@
       "thresholds": [0.78, 0.86, 0.90, 0.82, 0.88, 0.80]
     },
     "IAM-Agent": {
+      "tagline": "A sentry between AI agents and MCP servers: verifies who the agent is, what it may do and on whose behalf, then logs each decision for audit, over STDIO or HTTP.",
       "visual": "sentry",
       "label": "IAM-AGENT · MCP SENTRY",
       "caption": "identity · permissions · delegation · audit"
