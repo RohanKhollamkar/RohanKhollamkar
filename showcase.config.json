@@ -26,6 +26,20 @@
       "thresholds": [0.78, 0.86, 0.90, 0.82, 0.88, 0.80]
     },
     "IAM-Agent": {
+      "title": "IAM-Agent",
+      "eyebrow": "AI & MCP SECURITY · AGENT IDENTITY · 2026",
+      "builtLabel": "WHY",
+      "built": "an agent's name is not proof of who it is",
+      "compare": [
+        ["Plain MCP", "identity and audit are left to each server"],
+        ["IAM-Agent", "every request verified, scoped and logged"]
+      ],
+      "features": [
+        { "title": "Verified identity", "text": "a SPIFFE SVID proves which agent is calling, not just a name" },
+        { "title": "Scoped access", "text": "the permission engine decides which tools each agent may use" },
+        { "title": "Accountability", "text": "delegation chain and audit log show who acted, and for whom" }
+      ],
+      "tags": ["Agentic AI", "MCP", "Agent identity", "SPIFFE / SVID", "Delegation chain", "Audit trail"],
       "tagline": "A sentry between AI agents and MCP servers: verifies who the agent is, what it may do and on whose behalf, then logs each decision for audit, over STDIO or HTTP.",
       "visual": "sentry",
       "label": "IAM-AGENT · MCP SENTRY",
