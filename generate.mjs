@@ -366,30 +366,48 @@ function visSentry() {
 }
 
 const DRAW = { network: visNetwork, documents: visDocuments, flow: visFlow, pipeline: visPipeline, storyboard: visStoryboard, sentry: visSentry };
+const BIG = new Set(['storyboard', 'sentry']); // visuals with small text, drawn on a larger panel
 
 // ---------- card ----------
 function render(m) {
   const L = 44;
   const title = clip(m.title, 30);
   const titleSize = title.length > 22 ? 32 : title.length > 16 ? 38 : 44;
-  const tagline = wrap(m.tagline, 62, 2);
+  // cards with a detailed diagram get a larger panel and a taller card, so the small text stays readable
+  const big = BIG.has(m.visual);
+  const S = big ? 1.35 : 1;
+  const Hc = big ? Math.round(PH * S) + 72 : H;
+  const panelX = Math.round(W - 36 - PW * S);
+  const RIGHT = big ? panelX - 24 : 590; // right edge of the text column
+  const tagline = wrap(m.tagline, big ? 54 : 62, big ? 3 : 2);
   const builtY = 150 + tagline.length * 23 + 12;
 
+  // tag pills: one row on standard cards, up to two rows on big ones
+  const rows = [[]];
+  let px = L;
+  for (const t of m.tags) {
+    const s = clip(t, 18), pw = Math.round(s.length * 6.7 + 24);
+    if (px + pw > RIGHT) {
+      if (!big || rows.length === 2) continue;
+      rows.push([]); px = L;
+    }
+    rows[rows.length - 1].push({ s, pw, x: px });
+    px += pw + 8;
+  }
+  const pillsTop = big ? Hc - 30 - rows.length * 24 - (rows.length - 1) * 8 : 306;
+  const statY = pillsTop - 40, ruleY = statY - 34;
+  const pills = rows.map((row, i) => row.map(({ s, pw, x }) => {
+    const y = pillsTop + i * 32;
+    return `<rect x="${x}" y="${y}" width="${pw}" height="24" rx="12" fill="${ROSE}" fill-opacity=".08" stroke="${ROSE}" stroke-opacity=".4"/><text x="${x + pw / 2}" y="${y + 16}" class="mono" font-size="11" fill="${ROSE}" text-anchor="middle">${esc(s)}</text>`;
+  }).join('')).join('');
+
+  const statStep = big ? 148 : 178;
   const stats = m.stats.map((s, k) => {
     const v = clip(s.value, 9);
-    return `<text x="${L + k * 178}" y="266" class="serif" font-size="${v.length > 5 ? 26 : 32}" fill="${ROSE}">${esc(v)}</text><text x="${L + k * 178}" y="286" class="mono" font-size="10" letter-spacing="1" fill="${MUTED}">${esc(clip(s.label, 22).toUpperCase())}</text>`;
+    return `<text x="${L + k * statStep}" y="${statY}" class="serif" font-size="${v.length > 5 ? 26 : 32}" fill="${ROSE}">${esc(v)}</text><text x="${L + k * statStep}" y="${statY + 20}" class="mono" font-size="10" letter-spacing="1" fill="${MUTED}">${esc(clip(s.label, 22).toUpperCase())}</text>`;
   }).join('');
 
-  let px = L;
-  const pills = m.tags.map(t => {
-    const s = clip(t, 18), pw = Math.round(s.length * 6.7 + 24);
-    if (px + pw > 590) return '';
-    const out = `<rect x="${px}" y="306" width="${pw}" height="24" rx="12" fill="${ROSE}" fill-opacity=".08" stroke="${ROSE}" stroke-opacity=".4"/><text x="${px + pw / 2}" y="322" class="mono" font-size="11" fill="${ROSE}" text-anchor="middle">${esc(s)}</text>`;
-    px += pw + 8;
-    return out;
-  }).join('');
-
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(m.title)}: ${esc(m.tagline)}">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${Hc}" viewBox="0 0 ${W} ${Hc}" role="img" aria-label="${esc(m.title)}: ${esc(m.tagline)}">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#140c11"/><stop offset="1" stop-color="#26121c"/>
@@ -427,24 +445,24 @@ function render(m) {
       .fill { stroke-dashoffset: 0; }
     }
   </style>
-  <rect width="${W}" height="${H}" rx="20" fill="url(#bg)"/>
-  <rect width="${W}" height="${H}" rx="20" fill="url(#glow)"/>
-  <rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="20" fill="none" stroke="${ROSE}" stroke-opacity=".28"/>
+  <rect width="${W}" height="${Hc}" rx="20" fill="url(#bg)"/>
+  <rect width="${W}" height="${Hc}" rx="20" fill="url(#glow)"/>
+  <rect x=".5" y=".5" width="${W - 1}" height="${Hc - 1}" rx="20" fill="none" stroke="${ROSE}" stroke-opacity=".28"/>
 
   <g class="in">
-    <text x="${L}" y="60" class="mono" font-size="12" letter-spacing="2.5" fill="${ROSE}">${esc(clip(m.eyebrow, 52))}</text>
+    <text x="${L}" y="60" class="mono" font-size="12" letter-spacing="${big ? 1.5 : 2.5}" fill="${ROSE}">${esc(clip(m.eyebrow, 52))}</text>
     <text x="${L}" y="${titleSize > 40 ? 114 : 110}" class="serif" font-size="${titleSize}" fill="${TEXT}">${esc(title)}</text>
     ${tagline.map((l, k) => `<text x="${L}" y="${150 + k * 23}" class="sans" font-size="15" fill="${MUTED}">${esc(l)}</text>`).join('\n    ')}
-    <text x="${L}" y="${builtY}" class="mono" font-size="12" fill="${TEXT}"><tspan fill="${ROSE}" letter-spacing="1.5">BUILT &gt;</tspan> ${esc(clip(m.built, 58))}<tspan class="cursor" fill="${ROSE}"> ▍</tspan></text>
+    <text x="${L}" y="${builtY}" class="mono" font-size="12" fill="${TEXT}"><tspan fill="${ROSE}" letter-spacing="1.5">BUILT &gt;</tspan> ${esc(clip(m.built, big ? 46 : 58))}<tspan class="cursor" fill="${ROSE}"> ▍</tspan></text>
   </g>
   <g class="in" style="animation-delay:.2s">
-    <line x1="${L}" y1="232" x2="590" y2="232" stroke="${ROSE}" stroke-opacity=".18"/>
+    <line x1="${L}" y1="${ruleY}" x2="${RIGHT}" y2="${ruleY}" stroke="${ROSE}" stroke-opacity=".18"/>
     ${stats}
     ${pills}
   </g>
 
   <g class="in" style="animation-delay:.35s">
-    <g transform="translate(628 36)">
+    <g transform="translate(${panelX} 36) scale(${S})">
       <rect width="${PW}" height="${PH}" rx="16" fill="${PANEL_BG}" fill-opacity=".75" stroke="${ROSE}" stroke-opacity=".2"/>
       <text x="18" y="28" class="mono" font-size="11" letter-spacing="2.5" fill="${ROSE}">${esc(clip(m.label, 22).toUpperCase())}</text>
       ${DRAW[m.visual](m)}
