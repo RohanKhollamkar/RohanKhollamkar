@@ -1,6 +1,6 @@
 {
   "_help": "Optional. Repos not listed here get cards built automatically from GitHub data. To customise one, add an entry under 'repos' keyed by the exact repo name, using any of the fields shown in _example. 'visual' is one of: network, documents, flow, pipeline, storyboard (planner > executor > six shots > assembly; takes 'cost', 'models' and 'thresholds' as in the directoragent entry), or sentry (agent > five checks > MCP server, over STDIO then HTTP). Product-led cards can also set 'features' (three { title, text } items shown instead of 'stats'), 'compare' (two [label, text] rows: without / with), and 'builtLabel' (replaces the word BUILT), as in the directoragent entry. Delete _example when you add real entries.",
-  "count": 2,
+  "count": 3,
   "exclude": [],
   "repos": {
     "directoragent": {
