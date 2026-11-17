@@ -3,7 +3,8 @@
 // Usage:  node generate.mjs            live data from the GitHub API, updates README between markers
 //         node generate.mjs --sample   built-in sample data, writes showcase/ only (local preview)
 //
-// Env:   GH_USER (default RohanKhollamkar), REPO_COUNT (default: config.count or 2),
+// Env:   GH_USER (default RohanKhollamkar), SHOWCASE_MODE (pinned|include|recent),
+//        REPO_COUNT (recent mode only; default: config.count or 2),
 //        EXCLUDE (comma-separated repo names), GITHUB_TOKEN (optional, raises API rate limit)
 // Files: showcase.config.json  optional per-repo overrides (title, tagline, stats, tags, visual ...)
 //        README.md             must contain <!--SHOWCASE:START--> ... <!--SHOWCASE:END-->
@@ -17,6 +18,10 @@ const OUT = 'showcase';
 
 const CONFIG = existsSync('showcase.config.json') ? JSON.parse(readFileSync('showcase.config.json', 'utf8')) : {};
 const COUNT = Number(process.env.REPO_COUNT || CONFIG.count || 2);
+// Which repos get a card: 'pinned' (pinned on the GitHub profile), 'include' (the
+// explicit list below) or 'recent' (whatever was pushed last - the old behaviour).
+const MODE = String(process.env.SHOWCASE_MODE || CONFIG.mode || 'pinned').toLowerCase();
+const INCLUDE = (CONFIG.include || []).map(s => String(s).trim()).filter(Boolean);
 const EXCLUDE = [...(CONFIG.exclude || []), ...(process.env.EXCLUDE || '').split(',')]
   .map(s => s.trim().toLowerCase()).filter(Boolean);
 const OVERRIDES = Object.fromEntries(
@@ -48,14 +53,64 @@ async function api(path) {
   return res.json();
 }
 
+async function pinnedNames() {
+  const query = `query($login:String!){user(login:$login){pinnedItems(first:6,types:REPOSITORY){nodes{... on Repository{name isPrivate}}}}}`;
+  const headers = { 'User-Agent': 'repo-showcase', 'Content-Type': 'application/json' };
+  if (TOKEN) headers.Authorization = `Bearer ${TOKEN}`;
+  const res = await fetch('https://api.github.com/graphql', {
+    method: 'POST', headers, body: JSON.stringify({ query, variables: { login: USER } }),
+  });
+  if (!res.ok) throw new Error(`GitHub GraphQL ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  const json = await res.json();
+  if (json.errors) throw new Error(`GitHub GraphQL: ${json.errors.map(e => e.message).join('; ')}`);
+  return ((json.data && json.data.user && json.data.user.pinnedItems && json.data.user.pinnedItems.nodes) || [])
+    .filter(n => n && n.name && !n.isPrivate).map(n => n.name);
+}
+
+async function byName(names) {
+  const out = [];
+  for (const n of names) {
+    try { out.push(await api(`/repos/${USER}/${n}`)); }
+    catch (e) { console.log(`! skipping "${n}": ${String(e.message).split('\n')[0]}`); }
+  }
+  return out;
+}
+
 async function fetchRepos() {
   if (SAMPLE) return SAMPLE_REPOS.slice(0, COUNT);
-  const all = await api(`/users/${USER}/repos?sort=pushed&direction=desc&per_page=50&type=owner`);
-  return all
-    .filter(r => !r.fork && !r.archived && !r.private)
+
+  let list, limit;
+  if (MODE === 'recent') {
+    list = await api(`/users/${USER}/repos?sort=pushed&direction=desc&per_page=50&type=owner`);
+    limit = COUNT;
+  } else if (MODE === 'include') {
+    if (!INCLUDE.length) throw new Error('mode "include" needs a non-empty "include" array in showcase.config.json');
+    list = await byName(INCLUDE);
+    limit = INCLUDE.length;
+  } else if (MODE === 'pinned') {
+    let names = [];
+    try {
+      if (!TOKEN) throw new Error('no GITHUB_TOKEN (the pinned list needs the GraphQL API)');
+      names = await pinnedNames();
+      if (!names.length) throw new Error(`no repositories are pinned on github.com/${USER}`);
+    } catch (e) {
+      if (!INCLUDE.length) throw new Error(`Could not read pinned repos: ${e.message}. Pin the repos you want to show on your GitHub profile, or set "mode": "include" in showcase.config.json and list them there.`);
+      console.log(`! pinned lookup failed (${e.message}); falling back to the "include" list`);
+      names = INCLUDE;
+    }
+    list = await byName(names);
+    limit = names.length;
+  } else {
+    throw new Error(`unknown "mode": ${MODE} (use "pinned", "include" or "recent")`);
+  }
+
+  const explicit = MODE !== 'recent';
+  return list
+    .filter(r => r && !r.archived && !r.private)
+    .filter(r => explicit || !r.fork)                        // an explicitly chosen fork is fine
     .filter(r => r.name.toLowerCase() !== USER.toLowerCase()) // skip the profile repo itself
     .filter(r => !EXCLUDE.includes(r.name.toLowerCase()))
-    .slice(0, COUNT);
+    .slice(0, limit);
 }
 
 async function fetchLangs(r) {

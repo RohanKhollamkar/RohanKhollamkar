@@ -1,5 +1,7 @@
 {
-  "_help": "Optional. Repos not listed here get cards built automatically from GitHub data. To customise one, add an entry under 'repos' keyed by the exact repo name, using any of the fields shown in _example. 'visual' is one of: network, documents, flow, pipeline, storyboard (planner > executor > six shots > assembly; takes 'cost', 'models' and 'thresholds' as in the directoragent entry), or sentry (agent > five checks > MCP server, over STDIO then HTTP). Product-led cards can also set 'features' (three { title, text } items shown instead of 'stats'), 'compare' (two [label, text] rows: without / with), and 'builtLabel' (replaces the word BUILT), as in the directoragent entry. Delete _example when you add real entries.",
+  "_help": "Which repos get a card is decided by 'mode'. pinned = the repos pinned on your GitHub profile (nothing appears until you pin it). include = exactly the repos named in 'include', in that order. recent = whatever you pushed last (old behaviour). 'count' applies to recent mode only. 'repos' holds optional per-repo overrides (title, tagline, stats, tags, visual ...).",
+  "mode": "pinned",
+  "include": [],
   "count": 3,
   "exclude": [],
   "repos": {
