@@ -41,7 +41,7 @@
   <rect x=".5" y=".5" width="999" height="359" rx="20" fill="none" stroke="#f0a6c4" stroke-opacity=".28"/>
 
   <g class="in">
-    <text x="44" y="60" class="mono" font-size="12" letter-spacing="2.5" fill="#f0a6c4">01 · PYTHON · 2026</text>
+    <text x="44" y="60" class="mono" font-size="12" letter-spacing="2.5" fill="#f0a6c4">02 · PYTHON · 2026</text>
     <text x="44" y="114" class="serif" font-size="44" fill="#f7eef2">Voice Agent</text>
     <text x="44" y="150" class="sans" font-size="15" fill="#b7a0ab">An AI agent configurable for any voice bot concept. Follows</text>
     <text x="44" y="173" class="sans" font-size="15" fill="#b7a0ab">the 3-step framework ASR (STT) --&gt; LLM (Reasoning &amp; Prompt)…</text>
