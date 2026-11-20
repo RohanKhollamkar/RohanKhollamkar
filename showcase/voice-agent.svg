@@ -50,7 +50,7 @@
   <g class="in" style="animation-delay:.2s">
     
     <line x1="44" y1="232" x2="590" y2="232" stroke="#f0a6c4" stroke-opacity=".18"/>
-    <text x="44" y="266" class="serif" font-size="32" fill="#f0a6c4">91%</text><text x="44" y="286" class="mono" font-size="10" letter-spacing="1" fill="#b7a0ab">PYTHON</text><text x="222" y="266" class="serif" font-size="32" fill="#f0a6c4">2</text><text x="222" y="286" class="mono" font-size="10" letter-spacing="1" fill="#b7a0ab">LANGUAGES</text><text x="400" y="266" class="serif" font-size="26" fill="#f0a6c4">Nov 2026</text><text x="400" y="286" class="mono" font-size="10" letter-spacing="1" fill="#b7a0ab">LAST PUSH</text>
+    <text x="44" y="266" class="serif" font-size="32" fill="#f0a6c4">92%</text><text x="44" y="286" class="mono" font-size="10" letter-spacing="1" fill="#b7a0ab">PYTHON</text><text x="222" y="266" class="serif" font-size="32" fill="#f0a6c4">2</text><text x="222" y="286" class="mono" font-size="10" letter-spacing="1" fill="#b7a0ab">LANGUAGES</text><text x="400" y="266" class="serif" font-size="26" fill="#f0a6c4">Nov 2026</text><text x="400" y="286" class="mono" font-size="10" letter-spacing="1" fill="#b7a0ab">LAST PUSH</text>
     <rect x="44" y="306" width="64" height="24" rx="12" fill="#f0a6c4" fill-opacity=".08" stroke="#f0a6c4" stroke-opacity=".4"/><text x="76" y="322" class="mono" font-size="11" fill="#f0a6c4" text-anchor="middle">Python</text><rect x="116" y="306" width="51" height="24" rx="12" fill="#f0a6c4" fill-opacity=".08" stroke="#f0a6c4" stroke-opacity=".4"/><text x="141.5" y="322" class="mono" font-size="11" fill="#f0a6c4" text-anchor="middle">HTML</text>
   </g>
 
